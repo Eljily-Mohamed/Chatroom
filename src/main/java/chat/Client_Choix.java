@@ -68,22 +68,16 @@ public class Client_Choix extends Application {
 		    BP1.setBottom(vbox_service); 
 			
 		    Scene scen1 = new Scene(BP1,900,600);
-		    stage.setScene(scen1);
-		    stage.setResizable(false);
-		    stage.show();
-
 				        
 			//logique for notre buttons and change this scene 
              
-			button_chat.setOnAction((Event) -> {
-				Scene scene2 = new Scene(BP1,400,500);
-				stage.setScene(scene2);
-				
-			});
+			Scene scene2 = new Scene(BP1,400,500);
+			
  
-			button_file.setOnAction((Event) -> {
-			   
-			});
+		    ScreenController screenController = new ScreenController(scen1);
+			screenController.addScreen("scene2",BP1);
+			screenController.activate("scene2");
+
 	   
 	}
 
