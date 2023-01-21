@@ -2,6 +2,7 @@ package chat;
 
 
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +21,8 @@ public class Client_Choix extends Application {
 		// TODO Auto-generated method stub
           launch(args);  
 	}
-
+    
+	// this is stat number 1  
 	@Override
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
@@ -33,13 +35,13 @@ public class Client_Choix extends Application {
 		     hbox.setSpacing(10);
 		     hbox.setStyle("-fx-background-color: #0057B8 ;"); 
 		     hbox.setPadding(new Insets(30));
-		          
+	
 		     BP1.setTop(hbox);
 		     
 		     Text Text_helo = new Text("Helo world");
 		     Text_helo.setFont(Font.font("Comic Sans MS",13));
-              Text_helo.setX(110);
-              Text_helo.setY(100);
+             Text_helo.setX(110);
+             Text_helo.setY(100);
 		    
 		     
 		     Button button_chat = new Button("Messagrie      ");//creation de notre button
@@ -53,23 +55,30 @@ public class Client_Choix extends Application {
 			 vbox_buttons.setPadding(new Insets(10));
 			 vbox_buttons.getChildren().addAll(title_text,button_chat,button_file);
 			 vbox_buttons.setAlignment(Pos.CENTER);
-			BP1.setCenter(vbox_buttons);
-		     
-		 
+			 BP1.setCenter(vbox_buttons);
 		     
 		    //on doit cree notre button 
-		     
 		   
 		    VBox vbox_service = new VBox();
 		    vbox_service.setSpacing(10);
 		    vbox_service.setStyle("-fx-background-color: #FFD700 ;"); 
 		    vbox_service.setPadding(new Insets(40));
 		    BP1.setBottom(vbox_service); 
-	       
-		    Scene scen1 = new Scene(BP1,900,600);
-		    stage.setScene(scen1);
-		    stage.setResizable(false);
-		    stage.show();
+	        
+			//logique for notre buttons and change this scene 
+
+			button_chat.setOnAction((Event) -> {
+				Scene scene2 = new Scene(BP1,900,600);
+				stage.setScene(scene2); 
+				stage.show();
+		   });
+
+			
+		    // Scene scen1 = new Scene(BP1,900,600);
+		    // stage.setScene(scen1);
+		    // stage.setResizable(false);
+		    // stage.show();
+	   
 	}
 
 }
