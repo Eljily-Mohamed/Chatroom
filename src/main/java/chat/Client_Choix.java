@@ -73,11 +73,18 @@ public class Client_Choix extends Application {
 				stage.show();
 		   });
 
+		   button_file.setOnAction((Event) -> {
+			    Stage stageMessagrie  = new Stage(); 
+            	Scene scene3 = new Scene(BP1,200,600);
+                stageMessagrie.setScene(scene3);
+				stageMessagrie.show();
+		   });
+
 			
-		    // Scene scen1 = new Scene(BP1,900,600);
-		    // stage.setScene(scen1);
-		    // stage.setResizable(false);
-		    // stage.show();
+		    Scene scen1 = new Scene(BP1,900,600);
+		    stage.setScene(scen1);
+		    stage.setResizable(false);
+		    stage.show();
 	   
 	}
 

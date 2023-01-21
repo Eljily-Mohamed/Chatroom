@@ -85,6 +85,7 @@ public class Client extends Application {
 	     vbox_chat.setPadding(new Insets(10));
 	     vbox_chat.getChildren().add(listview);
 	     BP.setCenter(vbox_chat);
+		 
 	     
 	     Text labelmessage = new Text("Message ");
 		 labelmessage.setFont(Font.font("Comic Sans MS"));
@@ -140,8 +141,10 @@ public class Client extends Application {
 			 }
 			 
 		 });
+
+		 //on doit utilse function for checking this stat
 		 
-		 
+
 		 //logique for button Envoyer 
 		 
 		 buttonEnvoyer.setOnAction((evt)->{
