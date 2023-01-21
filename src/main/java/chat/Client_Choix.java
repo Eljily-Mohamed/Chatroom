@@ -26,6 +26,8 @@ public class Client_Choix extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
+
+		
 		     BorderPane BP1 = new BorderPane();
 		    //creation de notre title 
 		     Text title_text = new Text("VOICI LES SERVICES ");
@@ -72,15 +74,16 @@ public class Client_Choix extends Application {
 
 				        
 			//logique for notre buttons and change this scene 
-
+             
 			button_chat.setOnAction((Event) -> {
-				stage.setScene(new Scene(vbox_service));
+				Scene scene2 = new Scene(BP1,400,500);
+				stage.setScene(scene2);
+				
 			});
  
 			button_file.setOnAction((Event) -> {
 			   
 			});
- 
 	   
 	}
 
