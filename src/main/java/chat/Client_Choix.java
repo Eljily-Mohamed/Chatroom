@@ -64,24 +64,23 @@ public class Client_Choix extends Application {
 		    vbox_service.setStyle("-fx-background-color: #FFD700 ;"); 
 		    vbox_service.setPadding(new Insets(40));
 		    BP1.setBottom(vbox_service); 
-	        
-			//logique for notre buttons and change this scene 
-
-			button_chat.setOnAction((Event) -> {
-				stage.setScene(new Scene(BP1));
-		   });
-
-		   button_file.setOnAction((Event) -> {
-            	Scene scen1 = new Scene(BP1,200,600);
-                stage.setScene(scen1);
-				stage.show();
-		   });
-
 			
 		    Scene scen1 = new Scene(BP1,900,600);
 		    stage.setScene(scen1);
 		    stage.setResizable(false);
 		    stage.show();
+
+				        
+			//logique for notre buttons and change this scene 
+
+			button_chat.setOnAction((Event) -> {
+				stage.setScene(new Scene(vbox_service));
+			});
+ 
+			button_file.setOnAction((Event) -> {
+			   
+			});
+ 
 	   
 	}
 
