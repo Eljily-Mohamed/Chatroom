@@ -68,16 +68,13 @@ public class Client_Choix extends Application {
 			//logique for notre buttons and change this scene 
 
 			button_chat.setOnAction((Event) -> {
-				Scene scene2 = new Scene(BP1,900,600);
-				stage.setScene(scene2); 
-				stage.show();
+				stage.setScene(new Scene(BP1));
 		   });
 
 		   button_file.setOnAction((Event) -> {
-			    Stage stageMessagrie  = new Stage(); 
-            	Scene scene3 = new Scene(BP1,200,600);
-                stageMessagrie.setScene(scene3);
-				stageMessagrie.show();
+            	Scene scen1 = new Scene(BP1,200,600);
+                stage.setScene(scen1);
+				stage.show();
 		   });
 
 			
