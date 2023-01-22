@@ -1,7 +1,15 @@
 package chat;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -138,15 +146,56 @@ public class Client_Choix extends Application {
 			BP.setBottom(hbox_message);
 				
 			
-			Scene scene = new Scene(BP,500,400);//500-->largere,hauteur
+			Scene scene = new Scene(BP,900,600);//500-->largere,hauteur
 			stage.setScene(scene);
 			stage.getIcons().add(new Image(Client.class.getResourceAsStream("icon_chat.jpg")));
 			stage.show();
 
+			//end the logique for connexion button press
+
+			buttonconnexion.setOnAction((evt)->{
+				PrintWriter pw ;
+				String host = textHost.getText();
+				int port = Integer.parseInt(textPort.getText());
+   
+   
+				//on va commance cree notre server
+				try {
+					Socket socket = new Socket(host,port);
+					InputStream inputStream = socket.getInputStream();
+					InputStreamReader isr = new InputStreamReader(inputStream);
+					BufferedReader br = new BufferedReader(isr);
+					pw = new PrintWriter(socket.getOutputStream(),true);
+					new Thread(()->{	
+						   while(true) {
+							   try {
+								String reponse = br.readLine();
+								Platform.runLater(()->{
+								listmodel.add(reponse);
+								});
+							   } catch (Exception e) {
+								   // TODO: handle exception
+								   e.printStackTrace();
+							   }
+						   }
+					}).start();
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+				
 			});
- 
+
+           //end this logique for buttons submit 
+
+			});
+
+
+
+
+            //logique for buttons for transfert file 
 			button_file.setOnAction((Event) -> {
-			   
+			    //on doit ajoute logique for this text file
+
 			});
 	   
 	}
