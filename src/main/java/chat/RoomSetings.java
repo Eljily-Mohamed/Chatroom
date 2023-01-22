@@ -166,18 +166,16 @@ public class RoomSetings extends Application {
 
 //////////////////////buton 1
 
-               //ajout logique pour la recuperation de la valeur selectione par user
-        
-   
+               //ajout logique pour la recuperation de la valeur selectione par user   
 
             createButton.setOnAction((Event) -> {
                 if(!textNameRoom.getText().isEmpty()){
                   String host = textNameRoom.getText();
                   
-                  Button privateButton = new Button("Login");
+                  Button privateButton = new Button("Private");
                   privateButton.setFont(Font.font("Comic Sans MS"));
                    
-                  Button publicButton = new Button("Login");
+                  Button publicButton = new Button("Public");
                   publicButton.setFont(Font.font("Comic Sans MS"));
                    
                   HBox hboxStatu = new HBox();
@@ -188,7 +186,7 @@ public class RoomSetings extends Application {
                   hboxStatu.setAlignment(Pos.TOP_CENTER);
                   
                   vboxroot.getChildren().add(hboxStatu);
-
+                  vboxroot.setMargin(hboxStatu , new Insets(20,20,30,10));
                   System.out.println("affichage de buttons chois par user pour selectione  ");
 
                 }
@@ -198,10 +196,36 @@ public class RoomSetings extends Application {
          });  
 
 
-        
 //////////////////////////////button2 
 
-
+logininRoom.setOnAction((Event) -> {
+    if(!selected.getText().isEmpty()){
+    String[] words = selected.getText().split(" ");
+        //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
+        Text labelAuth = new Text("Private Romm Ajoute Key  ");
+        labelAuth.setFont(Font.font("Comic Sans MS"));
+        
+        TextField textAuth = new TextField("Add Name "); //cree text filde permet de ajout text
+        textAuth.setFont(Font.font("Comic Sans MS"));
+        textAuth.setPrefSize(300, 30);
+        
+        Button buttonAuth = new Button("Cree");//creation de notre button
+        buttonAuth.setFont(Font.font("Comic Sans MS"));
+        
+        HBox hboxAuthe = new HBox();
+        hboxAuthe.setSpacing(10);
+        hboxAuthe.setPadding(new Insets(10,20,20,10));
+        hboxAuthe.getChildren().addAll(labelcree,textNameRoom,createButton);
+        hboxAuthe.setAlignment(Pos.CENTER);
+  
+        vboxroot.getChildren().remove(1, 3);
+        vboxroot.getChildren().add(hboxAuthe);
+        
+    }
+    else{
+        System.out.println("not Room selectione ");
+    }
+});
 
 
 
