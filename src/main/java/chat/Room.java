@@ -9,6 +9,7 @@ public class Room {
      Room (String name, String statu){
         this.name = name;
         this.statu = statu;
+        this.numberRoom ++ ;
      }
 
      public void setStatu(String statu) {

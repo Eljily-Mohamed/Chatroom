@@ -33,9 +33,9 @@ public class RoomSetings extends Application {
 
         //creating checkboxes for rentre dans une chat room available
 
-        Room vietnamese = new Room("vi", "Vietnamese");
-        Room english = new Room("en", "English");
-        Room russian = new Room("ru", "Russian");
+        Room vietnamese = new Room("Eljily", "Vietnamese");
+        Room english = new Room("Mohamed", "English");
+        Room russian = new Room("Ahmed", "Russian");
         Separator separator = new Separator();
 
         ObservableList<?> Rooms //
