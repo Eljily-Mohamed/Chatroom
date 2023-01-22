@@ -103,6 +103,10 @@ public class RoomSetings extends Application {
         //creation for buttons chat Private  
 
               //create ComboBox 
+               
+              Text textPrivate= new Text("Private Chat: ");
+              textRoom.setFont(Font.font("Comic Sans MS"));
+
               String [] privateChoix = {"PV -> Numero","PV -> Name"};
               ComboBox cbPrivate =
               new ComboBox(FXCollections
@@ -127,7 +131,7 @@ public class RoomSetings extends Application {
         hboxPrivate.setSpacing(10);
         hboxPrivate.setStyle("-fx-background-color: #DAF7A6 ;"); 
         hboxPrivate.setPadding(new Insets(10,20,20,10));
-        hboxPrivate.getChildren().addAll(cbPrivate,logininPrivate);
+        hboxPrivate.getChildren().addAll(textPrivate,cbPrivate,logininPrivate);
         hboxPrivate.setAlignment(Pos.CENTER);
         
         VBox vboxroot = new VBox(hboxRoom,hboxPrivate);
