@@ -41,8 +41,9 @@ public class Room extends Application {
         hboxRoom.setStyle("-fx-background-color: #DAF7A6 ;"); 
         hboxRoom.setPadding(new Insets(10,20,20,10));
         hboxRoom.getChildren().addAll(cb,logininRoom);
-      
-
+          
+        borderPane.setCenter(hboxRoom);
+                   
         Scene sceneRoom = new Scene(borderPane,900,600);
         stage.setScene(sceneRoom);
         stage.setResizable(false);
