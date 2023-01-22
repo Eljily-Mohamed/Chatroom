@@ -172,8 +172,9 @@ public class RoomSetings extends Application {
                   hboxStatu.setPadding(new Insets(20,20,20,10));
                   hboxStatu.getChildren().addAll(privateButton , publicButton);
                   hboxStatu.setAlignment(Pos.TOP_CENTER);
-                  
-                  vboxroot.getChildren().add(hboxStatu);
+
+                  vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
+                  vboxroot.getChildren().addAll(hboxCraetion,hboxStatu);
                   vboxroot.setMargin(hboxStatu , new Insets(20,20,30,10));
                   System.out.println("affichage de buttons chois par user pour selectione  ");
 
