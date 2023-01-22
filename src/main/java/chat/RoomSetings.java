@@ -161,14 +161,20 @@ public class RoomSetings extends Application {
 
             createButton.setOnAction((Event) -> {
                 if(!textNameRoom.getText().isEmpty()){
+
+                  Room room = new Room("", "") ;
+
                   String host = textNameRoom.getText();
-                  
+                  room.setName(host);
+
                   Button privateButton = new Button("Private");
                   privateButton.setFont(Font.font("Comic Sans MS"));
                    
+
                   Button publicButton = new Button("Public");
                   publicButton.setFont(Font.font("Comic Sans MS"));
-                   
+                  
+                  
                   HBox hboxStatu = new HBox();
                   hboxStatu.setSpacing(10);
                   hboxStatu.setStyle("-fx-background-color: #DAF7A6 ;"); 
@@ -182,11 +188,6 @@ public class RoomSetings extends Application {
                   System.out.println("affichage de buttons chois par user pour selectione  ");
 
                   privateButton.setOnAction((Eventprivate) -> { 
-                    Text key = new Text();
-                    key.setFont(Font.font("Comic Sans MS"));
-                    key.setFont(Font.font ("Verdana", 20));
-                    key.setFill(Color.RED);
-
                     int leftLimit = 48; // numeral '0'
                     int rightLimit = 122; // letter 'z'
                     int targetStringLength = 32;
@@ -197,12 +198,14 @@ public class RoomSetings extends Application {
                       .limit(targetStringLength)
                       .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                       .toString();
-                                      
-                      key.setText(generatedString);
-                      vboxroot.getChildren().add(key);
+                    
+                    room.setKey(generatedString);
+                    room.setStatu("private");
+
                       try {
-                        TimeUnit.MINUTES.sleep(1);
-                        Scene scenePrivateRoom = new Scene(hboxPrivate,900,600);
+                
+                        TimeUnit.SECONDS.sleep(5);
+                        Scene scenePrivateRoom = new Scene(hboxRoom,900,600);
                         stage.setScene(scenePrivateRoom);
                         stage.setResizable(false);
                         stage.show();
@@ -215,10 +218,26 @@ public class RoomSetings extends Application {
 
                   });
 
+                  publicButton.setOnAction((eventPubic) -> {
+                       room.setStatu("public");  
+                       try {
+                
+                        TimeUnit.SECONDS.sleep(5);
+                        Scene scenePrivateRoom = new Scene(hboxRoom,900,600);
+                        stage.setScene(scenePrivateRoom);
+                        stage.setResizable(false);
+                        stage.show();
+                        
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                  });
+
                 }
                 else{
-                    System.out.println("not Room selectione ");
-               
+                    //affichage le nom de la room empty 
+                    System.out.println("Empty Room name ");
                 }
                  
          });  
