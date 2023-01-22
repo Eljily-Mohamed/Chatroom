@@ -1,57 +1,34 @@
 package chat;
 
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Separator;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+public class Room {
+     private static int numberRoom ;
+     private String name ;
+     private String statu ;
+     
 
-public class Room extends Application {
+     Room (String name, String statu){
+        this.name = name;
+        this.statu = statu;
+     }
+
+     public void setStatu(String statu) {
+         this.statu = statu;
+     }
+
+     public void setName(String name) {
+         this.name = name;
+     }
+
+     public String getName() {
+         return name;
+     }
+     public String getStatu() {
+         return statu;
+     }
+     //methode toString 
+     @Override
+     public String toString() {
+         return this.name;
+     }
     
-    public static void main(String[] args) {
-        launch(args);
-  }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        stage.setTitle("Room Chat");
-         Text textRoom = new Text("Room Available: ");
-		 textRoom.setFont(Font.font("Comic Sans MS"));
-
-        //cree text for display for identifie le room available 
-
-        //creating checkboxes for rentre dans une chat room available
-
-        ChoiceBox cb = new ChoiceBox();
-        cb.setItems(FXCollections.observableArrayList("Open ","Save", "Save as"));
-
-        //creation de notre button qui login a l'un de room available
-        Button logininRoom = new Button("Login");
-        logininRoom.setFont(Font.font("Comic Sans MS"));
-         
-        HBox hboxRoom = new HBox();
-        hboxRoom.setSpacing(10);
-        hboxRoom.setStyle("-fx-background-color: #DAF7A6 ;"); 
-        hboxRoom.setPadding(new Insets(10,20,20,10));
-        hboxRoom.getChildren().addAll(textRoom,cb,logininRoom);
-        hboxRoom.setAlignment(Pos.CENTER);
-
-        //ajout logique pour la recuperation de la valeur selectione par user
-    
-      
-        Scene sceneRoom = new Scene(hboxRoom,900,600);
-        stage.setScene(sceneRoom);
-        stage.setResizable(false);
-        stage.show();
-    }
 }
