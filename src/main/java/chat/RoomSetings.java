@@ -119,18 +119,6 @@ public class RoomSetings extends Application {
         logininPrivate.setFont(Font.font("Comic Sans MS"));
         
 
-        //on ajouer for selectione button
-
-        logininPrivate.setOnAction((Event) -> {
-            if(!selectedPrivate.getText().isEmpty()){
-            String[] words = selectedPrivate.getText().split("->");
-                System.out.println(words[1]);
-            }
-            else{
-                System.out.println("not Room selectione ");
-            }
-        });
-
 
         HBox hboxPrivate = new HBox();
         hboxPrivate.setSpacing(10);
@@ -227,19 +215,40 @@ logininRoom.setOnAction((Event) -> {
     }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
 //////////////////////////////button3 
+             
+      //on ajouer for selectione button
+
+      logininPrivate.setOnAction((Event) -> {
+        if(!selectedPrivate.getText().isEmpty()){
+        String[] words = selectedPrivate.getText().split("->");
+             //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
+        Text labelAuth = new Text("Cle comminucation ");
+        labelAuth.setFont(Font.font("Comic Sans MS"));
+        
+        TextField textAuth = new TextField("Add Your" +words[1]); //cree text filde permet de ajout text
+        textAuth.setFont(Font.font("Comic Sans MS"));
+        textAuth.setPrefSize(300, 30);
+        
+        Button buttonAuth = new Button("Login");//creation de notre button
+        buttonAuth.setFont(Font.font("Comic Sans MS"));
+        
+        HBox hboxAuthe = new HBox();
+        hboxAuthe.setSpacing(10);
+        hboxAuthe.setPadding(new Insets(10,20,20,10));
+        hboxAuthe.getChildren().addAll(labelAuth,textAuth,buttonAuth);
+        hboxAuthe.setAlignment(Pos.CENTER);
+        
+        vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
+        vboxroot.getChildren().addAll(hboxPrivate,hboxAuthe);
+
+        }
+        else{
+            System.out.println("not Room selectione ");
+        }
+    });
+
+
 
         Scene sceneRoom = new Scene(vboxroot,900,600);
         stage.setScene(sceneRoom);
