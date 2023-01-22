@@ -206,8 +206,9 @@ logininRoom.setOnAction((Event) -> {
         hboxAuthe.getChildren().addAll(labelAuth,textAuth,buttonAuth);
         hboxAuthe.setAlignment(Pos.CENTER);
   
-        vboxroot.getChildren().remove(1, 3);
-        vboxroot.getChildren().add(hboxAuthe);
+        vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
+        vboxroot.getChildren().addAll(hboxRoom,hboxAuthe);
+        vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
         
     }
     else{
@@ -241,6 +242,7 @@ logininRoom.setOnAction((Event) -> {
         
         vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
         vboxroot.getChildren().addAll(hboxPrivate,hboxAuthe);
+        vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
 
         }
         else{
