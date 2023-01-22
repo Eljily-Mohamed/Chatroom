@@ -15,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -78,19 +79,7 @@ public class RoomSetings extends Application {
         //creation de notre button qui login a l'un de room available
         Button logininRoom = new Button("Login");
         logininRoom.setFont(Font.font("Comic Sans MS"));
-         
-        //ajout logique pour la recuperation de la valeur selectione par user
-        
-       
-            logininRoom.setOnAction((Event) -> {
-                if(!selected.getText().isEmpty()){
-                String[] words = selected.getText().split("\\W");
-                    System.out.println(words[0]);
-                }
-                else{
-                    System.out.println("not Room selectione ");
-                }
-            });     
+            
        
         HBox hboxRoom = new HBox();
         hboxRoom.setSpacing(10);
@@ -100,7 +89,9 @@ public class RoomSetings extends Application {
         hboxRoom.setAlignment(Pos.CENTER);
         
     
-        //creation for buttons chat Private  
+    /////////////////creation for buttons chat Private ////////////////////////////////////////////////////
+        
+        
 
               //create ComboBox 
                
@@ -118,26 +109,114 @@ public class RoomSetings extends Application {
                         EventHandler<ActionEvent> eventPrivate =
                         new EventHandler<ActionEvent>() {
                              public void handle(ActionEvent e){
-                                selected.setText(cb.getValue() + " selected");
+                                selectedPrivate.setText(cbPrivate.getValue() + "");
                             }
                         };
                        
-                        cb.setOnAction(eventPrivate);
+                        cbPrivate.setOnAction(eventPrivate);
     
         Button logininPrivate = new Button("Login");
         logininPrivate.setFont(Font.font("Comic Sans MS"));
         
+
+        //on ajouer for selectione button
+
+        logininPrivate.setOnAction((Event) -> {
+            if(!selectedPrivate.getText().isEmpty()){
+            String[] words = selectedPrivate.getText().split("->");
+                System.out.println(words[1]);
+            }
+            else{
+                System.out.println("not Room selectione ");
+            }
+        });
+
+
         HBox hboxPrivate = new HBox();
         hboxPrivate.setSpacing(10);
         hboxPrivate.setStyle("-fx-background-color: #DAF7A6 ;"); 
-        hboxPrivate.setPadding(new Insets(10,20,20,10));
+        hboxPrivate.setPadding(new Insets(20,20,20,10));
         hboxPrivate.getChildren().addAll(textPrivate,cbPrivate,logininPrivate);
         hboxPrivate.setAlignment(Pos.CENTER);
         
-        VBox vboxroot = new VBox(hboxRoom,hboxPrivate);
+
+        //////////////////////////HBOX for creation de romm 
+         
+        Text labelcree = new Text("Cree Your Room");
+        labelcree.setFont(Font.font("Comic Sans MS"));
+        
+        TextField textNameRoom = new TextField("Add Name "); //cree text filde permet de ajout text
+        textNameRoom.setFont(Font.font("Comic Sans MS"));
+        textNameRoom.setPrefSize(300, 30);
+        
+        Button createButton = new Button("Cree");//creation de notre button
+        createButton.setFont(Font.font("Comic Sans MS"));
+        
+        HBox hboxCraetion = new HBox();
+        hboxCraetion.setSpacing(10);
+        hboxCraetion.setPadding(new Insets(10,20,20,10));
+        hboxCraetion.getChildren().addAll(labelcree,textNameRoom,createButton);
+        hboxCraetion.setAlignment(Pos.CENTER);
+  
+        VBox vboxroot = new VBox(hboxRoom,hboxPrivate,hboxCraetion);
+        vboxroot.setMargin(hboxCraetion,new Insets(30,0,0,0) );
         vboxroot.setAlignment(Pos.CENTER);
 
+////////////////////////////////////////////////////////////////////////////////////Logique for buttons 
+
+//////////////////////buton 1
+
+               //ajout logique pour la recuperation de la valeur selectione par user
         
+   
+
+            createButton.setOnAction((Event) -> {
+                if(!textNameRoom.getText().isEmpty()){
+                  String host = textNameRoom.getText();
+                  
+                  Button privateButton = new Button("Login");
+                  privateButton.setFont(Font.font("Comic Sans MS"));
+                   
+                  Button publicButton = new Button("Login");
+                  publicButton.setFont(Font.font("Comic Sans MS"));
+                   
+                  HBox hboxStatu = new HBox();
+                  hboxStatu.setSpacing(10);
+                  hboxStatu.setStyle("-fx-background-color: #DAF7A6 ;"); 
+                  hboxStatu.setPadding(new Insets(20,20,20,10));
+                  hboxStatu.getChildren().addAll(privateButton , publicButton);
+                  hboxStatu.setAlignment(Pos.TOP_CENTER);
+                  
+                  vboxroot.getChildren().add(hboxStatu);
+
+                  System.out.println("affichage de buttons chois par user pour selectione  ");
+
+                }
+                else{
+                    System.out.println("not Room selectione ");
+                }
+         });  
+
+
+        
+//////////////////////////////button2 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////button3 
+
         Scene sceneRoom = new Scene(vboxroot,900,600);
         stage.setScene(sceneRoom);
         stage.setResizable(false);
