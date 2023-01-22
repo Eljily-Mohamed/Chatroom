@@ -43,7 +43,8 @@ public class Room extends Application {
         hboxRoom.getChildren().addAll(cb,logininRoom);
           
         borderPane.setCenter(hboxRoom);
-                   
+        borderPane.setScaleX(200);
+        
         Scene sceneRoom = new Scene(borderPane,900,600);
         stage.setScene(sceneRoom);
         stage.setResizable(false);
