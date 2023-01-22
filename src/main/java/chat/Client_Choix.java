@@ -27,7 +27,10 @@ public class Client_Choix extends Application {
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
 
-		
+		     Stage stage1 = new Stage();
+		     Stage stage2 = new Stage();
+
+
 		     BorderPane BP1 = new BorderPane();
 		    //creation de notre title 
 		     Text title_text = new Text("VOICI LES SERVICES ");
@@ -68,16 +71,23 @@ public class Client_Choix extends Application {
 		    BP1.setBottom(vbox_service); 
 			
 		    Scene scen1 = new Scene(BP1,900,600);
+		    stage.setScene(scen1);
+		    stage.setResizable(false);
+		    stage.show();
+
 				        
 			//logique for notre buttons and change this scene 
              
-			Scene scene2 = new Scene(BP1,400,500);
-			
+			button_chat.setOnAction((Event) -> {
+				Scene scen2= new Scene(BP1,900,600);
+				stage1.setScene(scen2);
+				stage1.setResizable(false);
+				stage1.show();
+			});
  
-		    ScreenController screenController = new ScreenController(scen1);
-			screenController.addScreen("scene2",BP1);
-			screenController.activate("scene2");
-
+			button_file.setOnAction((Event) -> {
+			   
+			});
 	   
 	}
 
