@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
@@ -53,17 +54,19 @@ public class RoomSetings extends Application {
                namesRooms.add(room.getName());
         }
 
-
+          
          //create ComboBox 
         ComboBox cb =
         new ComboBox(FXCollections
                   .observableArrayList(namesRooms));
+
+        Label selected = new Label();
         
         //create handler for this comboBox 
         EventHandler<ActionEvent> event =
         new EventHandler<ActionEvent>() {
              public void handle(ActionEvent e){
-               item = cb.getValue().toString();
+                selected.setText(cb.getValue() + " selected");
             }
         };
        
@@ -74,18 +77,36 @@ public class RoomSetings extends Application {
         Button logininRoom = new Button("Login");
         logininRoom.setFont(Font.font("Comic Sans MS"));
          
- 
+        //ajout logique pour la recuperation de la valeur selectione par user
+        
+        if(!selected.getText().isEmpty()){
+            logininRoom.setOnAction((Event) -> {
+                String[] words = selected.getText().split("\\W");
+                    System.out.println(words[0]);
+            });     
+        }  
+        
+        HBox hboxPrivate = new HBox();
+        hboxPrivate.setSpacing(10);
+        hboxPrivate.setStyle("-fx-background-color: #DAF7A6 ;"); 
+        hboxPrivate.setPadding(new Insets(10,20,20,10));
+        hboxPrivate.getChildren().addAll(selected,textRoom,cb,logininRoom);
+        hboxPrivate.setAlignment(Pos.CENTER);
+        
+         
+        //creation for buttons chat Private  
+    
+        Button logininPrivate = new Button("Login");
+        logininPrivate.setFont(Font.font("Comic Sans MS"));
 
         HBox hboxRoom = new HBox();
         hboxRoom.setSpacing(10);
         hboxRoom.setStyle("-fx-background-color: #DAF7A6 ;"); 
         hboxRoom.setPadding(new Insets(10,20,20,10));
-        hboxRoom.getChildren().addAll(textRoom,cb,logininRoom);
+        hboxRoom.getChildren().addAll(,cb,logininPrivate);
         hboxRoom.setAlignment(Pos.CENTER);
 
-        //ajout logique pour la recuperation de la valeur selectione par user
-    
-      
+
         Scene sceneRoom = new Scene(hboxRoom,900,600);
         stage.setScene(sceneRoom);
         stage.setResizable(false);
