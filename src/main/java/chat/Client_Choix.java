@@ -108,7 +108,8 @@ public class Client_Choix extends Application {
 			hbox_chat.setStyle("-fx-background-color: #DAF7A6 ;"); 
 			hbox_chat.setPadding(new Insets(10,20,20,10));
 			hbox_chat.getChildren().addAll(labelhost,textHost,labelPort,textPort,buttonconnexion); 
-				
+			
+			BP.setTop(hbox_chat);
 				
 			ObservableList<String> listmodel =FXCollections.observableArrayList();
 			ListView<String> listview = new ListView<String>(listmodel);
@@ -136,7 +137,7 @@ public class Client_Choix extends Application {
 				
 			BP.setBottom(hbox_message);
 				
-			BP.setTop(hbox);
+			
 			Scene scene = new Scene(BP,500,400);//500-->largere,hauteur
 			stage.setScene(scene);
 			stage.getIcons().add(new Image(Client.class.getResourceAsStream("icon_chat.jpg")));
