@@ -2,7 +2,6 @@ package chat;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -32,14 +31,10 @@ public class Room extends Application {
         //cree text for display for identifie le room available 
 
         //creating checkboxes for rentre dans une chat room available
-          
-        Language vietnamese = new Language("vi", "Vietnamese");
-        Language english = new Language("en", "English");
-        Language russian = new Language("ru", "Russian");
-        ObservableList<Language> languages //
-        = FXCollections.observableArrayList(vietnamese, english, russian);
 
-ChoiceBox<Language> cb = new ChoiceBox<Language>(languages);
+        ChoiceBox cb = new ChoiceBox();
+        cb.setItems(FXCollections.observableArrayList("Open ","Save", "Save as"));
+
         //creation de notre button qui login a l'un de room available
         Button logininRoom = new Button("Login");
         logininRoom.setFont(Font.font("Comic Sans MS"));
@@ -48,13 +43,12 @@ ChoiceBox<Language> cb = new ChoiceBox<Language>(languages);
         hboxRoom.setSpacing(10);
         hboxRoom.setStyle("-fx-background-color: #DAF7A6 ;"); 
         hboxRoom.setPadding(new Insets(10,20,20,10));
+        hboxRoom.getChildren().addAll(textRoom,cb,logininRoom);
         hboxRoom.setAlignment(Pos.CENTER);
 
         //ajout logique pour la recuperation de la valeur selectione par user
-        
-         //Text value = new Text(""+cb.getSelectionModel().getSelectedItem());
-        System.out.println("slectione : "+cb.getSelectionModel().getSelectedItem());
-        hboxRoom.getChildren().addAll(textRoom,cb,logininRoom);
+    
+      
         Scene sceneRoom = new Scene(hboxRoom,900,600);
         stage.setScene(sceneRoom);
         stage.setResizable(false);
