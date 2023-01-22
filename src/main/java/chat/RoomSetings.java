@@ -202,20 +202,20 @@ logininRoom.setOnAction((Event) -> {
     if(!selected.getText().isEmpty()){
     String[] words = selected.getText().split(" ");
         //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
-        Text labelAuth = new Text("Private Romm Ajoute Key  ");
+        Text labelAuth = new Text("Private Romm ");
         labelAuth.setFont(Font.font("Comic Sans MS"));
         
-        TextField textAuth = new TextField("Add Name "); //cree text filde permet de ajout text
+        TextField textAuth = new TextField("Add Key "); //cree text filde permet de ajout text
         textAuth.setFont(Font.font("Comic Sans MS"));
         textAuth.setPrefSize(300, 30);
         
-        Button buttonAuth = new Button("Cree");//creation de notre button
+        Button buttonAuth = new Button("Login");//creation de notre button
         buttonAuth.setFont(Font.font("Comic Sans MS"));
         
         HBox hboxAuthe = new HBox();
         hboxAuthe.setSpacing(10);
         hboxAuthe.setPadding(new Insets(10,20,20,10));
-        hboxAuthe.getChildren().addAll(labelcree,textNameRoom,createButton);
+        hboxAuthe.getChildren().addAll(labelAuth,textAuth,buttonAuth);
         hboxAuthe.setAlignment(Pos.CENTER);
   
         vboxroot.getChildren().remove(1, 3);
