@@ -2,6 +2,7 @@ package chat;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -21,6 +22,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -180,6 +182,11 @@ public class RoomSetings extends Application {
                   System.out.println("affichage de buttons chois par user pour selectione  ");
 
                   privateButton.setOnAction((Eventprivate) -> { 
+                    Text key = new Text();
+                    key.setFont(Font.font("Comic Sans MS"));
+                    key.setFont(Font.font ("Verdana", 20));
+                    key.setFill(Color.RED);
+
                     int leftLimit = 48; // numeral '0'
                     int rightLimit = 122; // letter 'z'
                     int targetStringLength = 32;
@@ -190,8 +197,21 @@ public class RoomSetings extends Application {
                       .limit(targetStringLength)
                       .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                       .toString();
-                 
-                       System.out.println(generatedString);
+                                      
+                      key.setText(generatedString);
+                      vboxroot.getChildren().add(key);
+                      try {
+                        TimeUnit.MINUTES.sleep(1);
+                        Scene scenePrivateRoom = new Scene(hboxPrivate,900,600);
+                        stage.setScene(scenePrivateRoom);
+                        stage.setResizable(false);
+                        stage.show();
+                        
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                     
 
                   });
 
