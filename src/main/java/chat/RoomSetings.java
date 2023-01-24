@@ -4,14 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
-import javax.swing.ListModel;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -258,12 +256,11 @@ public class RoomSetings extends Application {
 ////////start connexion a server 
 		 //on va commance cree notre server
          try {
-            Socket socket = new Socket("localhost",1234);
-            InputStream inputStream = socket.getInputStream();
-            InputStreamReader isr = new InputStreamReader(inputStream);
             
-            BufferedReader br = new BufferedReader(isr);
-            pw = new PrintWriter(socket.getOutputStream(),true);
+            Socket echoSocket = new Socket("localhost", 1234);
+            ObjectOutputStream out = new ObjectOutputStream(echoSocket.getOutputStream());
+            out.writeObject(room);  
+            
             new Thread(()->{	
                    while(true) {
                        try {
@@ -282,7 +279,8 @@ public class RoomSetings extends Application {
             e.printStackTrace();
         }
         
-                }
+           }
+        
                 else{
                     //affichage le nom de la room empty 
                     System.out.println("Empty Room name ");
