@@ -1,10 +1,19 @@
 package chat;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.ListModel;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +39,11 @@ import javafx.stage.Stage;
 public class RoomSetings extends Application {
 
     String item ;
+    PrintWriter pw ;
+    InputStream inputStream ;
+    InputStreamReader isr;           
+    BufferedReader br;
+    
     
     public static void main(String[] args) {
         launch(args);
@@ -187,7 +201,10 @@ public class RoomSetings extends Application {
                   vboxroot.setMargin(hboxStatu , new Insets(20,20,30,10));
                   System.out.println("affichage de buttons chois par user pour selectione  ");
 
-                  privateButton.setOnAction((Eventprivate) -> { 
+
+        /////buttons type de room 
+
+                    privateButton.setOnAction((Eventprivate) -> { 
                     int leftLimit = 48; // numeral '0'
                     int rightLimit = 122; // letter 'z'
                     int targetStringLength = 32;
@@ -218,6 +235,9 @@ public class RoomSetings extends Application {
 
                   });
 
+ 
+
+
                   publicButton.setOnAction((eventPubic) -> {
                        room.setStatu("public");  
                        try {
@@ -234,6 +254,34 @@ public class RoomSetings extends Application {
                     }
                   });
 
+////////end buttons type de room
+////////start connexion a server 
+		 //on va commance cree notre server
+         try {
+            Socket socket = new Socket("localhost",1234);
+            InputStream inputStream = socket.getInputStream();
+            InputStreamReader isr = new InputStreamReader(inputStream);
+            
+            BufferedReader br = new BufferedReader(isr);
+            pw = new PrintWriter(socket.getOutputStream(),true);
+            new Thread(()->{	
+                   while(true) {
+                       try {
+                        String reponse = br.readLine();
+                        Platform.runLater(()->{
+                       
+                             
+                        });
+                       } catch (Exception e) {
+                           // TODO: handle exception
+                           e.printStackTrace();
+                       }
+                   }
+            }).start();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        
                 }
                 else{
                     //affichage le nom de la room empty 
@@ -242,7 +290,8 @@ public class RoomSetings extends Application {
                  
          });  
 
-        
+
+
 
 
 //////////////////////////////button2 
