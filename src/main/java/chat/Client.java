@@ -121,6 +121,7 @@ public class Client extends Application {
 				 Socket socket = new Socket(host,port);
 				 InputStream inputStream = socket.getInputStream();
 				 InputStreamReader isr = new InputStreamReader(inputStream);
+				 
 				 BufferedReader br = new BufferedReader(isr);
 				 pw = new PrintWriter(socket.getOutputStream(),true);
 				 new Thread(()->{	
