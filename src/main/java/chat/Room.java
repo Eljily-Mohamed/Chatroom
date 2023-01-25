@@ -1,6 +1,8 @@
 package chat;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable{
      private static int numberRoom ;
      private String name ;
      private String statu ;

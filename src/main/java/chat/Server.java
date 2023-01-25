@@ -1,59 +1,31 @@
 package chat;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 
-//on doit cree notre server multithread
+public class Server {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        // don't need to specify a hostname, it will be the current machine
+        ServerSocket ss = new ServerSocket(7777);
+        System.out.println("ServerSocket awaiting connections...");
+        Socket socket = ss.accept(); // blocking call, this will wait until a connection is attempted on this port.
+        System.out.println("Connection from " + socket + "!");
 
+        // get the input stream from the connected socket
+        InputStream inputStream = socket.getInputStream();
+        // create a DataInputStream so we can read data from it.
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
-//class server for 
-
-public class Server extends Thread {
-	
-	  PrintWriter pw;
-	  InputStream is ;
-	  InputStreamReader isr ;
-	  BufferedReader br ;
-	  
-
-	  private List<Room> rooms = new ArrayList<Room>();
-
-	  public static void main(String[] args) {
-		new Serveur().start();
-	}
-	  @Override
-	public void run() {
-          try {
-            ServerSocket ss = new ServerSocket(1234);
-            System.out.println("le systeme est pret pour accepter les connexions");
-            Socket socket = ss.accept();
-            ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
-    
-            Room m = (Room) is.readObject();
-           
-            System.out.println(m);
-    
-            os.writeObject(m);
-            socket.close(); 
-               
-			} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-	 }
-  }
-	  
-//end class etablier connexion 
+        // read the list of messages from the socket
+        List<Room> listOfMessages = (List<Room>) objectInputStream.readObject();
+        System.out.println("Received [" + listOfMessages.size() + "] messages from: " + socket);
+        // print out the text of every message
+        System.out.println("All messages:");
+        listOfMessages.forEach((msg)-> System.out.println(msg.getName()));
+        System.out.println("Closing sockets.");
+        ss.close();
+        socket.close();
+    }
+}

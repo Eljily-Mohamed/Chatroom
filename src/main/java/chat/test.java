@@ -1,36 +1,33 @@
 package chat;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class test {
 
-    PrintWriter pw ;
-    InputStream inputStream ;
-    InputStreamReader isr;           
-    BufferedReader br;
-    
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        // need host and port, we want to connect to the ServerSocket at port 7777
+        Socket socket = new Socket("localhost", 7777);
+        System.out.println("Connected!");
 
-        try {
-            System.out.println("welcome client");
-            Socket socket = new Socket("localhost", 1234);
-            System.out.println("Client connected");
-            ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
-            System.out.println("Ok");
-            Room room = new Room("room1","public");
-            os.writeObject(room);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-       
-        //out.writeObject(room); 
+        // get the output stream from the socket.
+        OutputStream outputStream = socket.getOutputStream();
+        // create an object output stream from the output stream so we can send an object through it
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+
+        // make a bunch of messages to send.
+        List<Room> messages = new ArrayList<>();
+        messages.add(new Room("Hello from the other side!" , "public"));
+        messages.add(new Room("How are you doing?" , "private"));
+        messages.add(new Room("What time is it?" , "private"));
+        messages.add(new Room("Hi hi hi hi." , "private"));
+
+        System.out.println("Sending messages to the ServerSocket");
+        objectOutputStream.writeObject(messages);
+
+        System.out.println("Closing socket and terminating program.");
+        socket.close();
     }
-  
 }
