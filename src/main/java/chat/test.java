@@ -26,7 +26,8 @@ public class test {
 
         System.out.println("Sending messages to the ServerSocket");
         objectOutputStream.writeObject(messages);
-
+        //get  the room setings donc on doit cree une list de room dans notre servers 
+        
         System.out.println("Closing socket and terminating program.");
         socket.close();
     }
