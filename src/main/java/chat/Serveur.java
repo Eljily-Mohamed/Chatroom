@@ -44,6 +44,7 @@ public class Serveur extends Thread {
 			    isr = new InputStreamReader(is);
 				br = new BufferedReader(isr);
 				action = br.read();
+				System.out.println(action);
 				if(action == 1){
 					++nmbr_Clients;
 					Conversation conversation = new Conversation(socket,nmbr_Clients);
