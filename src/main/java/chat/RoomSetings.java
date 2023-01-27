@@ -223,18 +223,18 @@ public class RoomSetings extends Application {
                     room.setKey(generatedString);
                     room.setStatu("private");
 
-                      try {
+                    //   try {
                 
-                        TimeUnit.SECONDS.sleep(5);
+                        //TimeUnit.SECONDS.sleep(5);
                         Scene scenePrivateRoom = new Scene(hboxRoom,900,600);
                         stage.setScene(scenePrivateRoom);
                         stage.setResizable(false);
                         stage.show();
                         
-                    } catch (InterruptedException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+                    // } catch (InterruptedException e1) {
+                    //     // TODO Auto-generated catch block
+                    //     e1.printStackTrace();
+                    // }
                      
                   });
 
@@ -255,7 +255,7 @@ public class RoomSetings extends Application {
                   });
 
                   //end buttons type de room
-                  //conexion a serveur pour ajoute le new Room 
+                  //conexion a serveur pour ajoute le new Room
                   try {
                     socket = new Socket("localhost", 7777);
                     System.out.println("Connected!");
