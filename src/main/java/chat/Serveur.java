@@ -27,6 +27,7 @@ public class Serveur extends Thread {
 	  public static void main(String[] args) {
 		new Serveur().start();
 	}
+
 	  @Override
 	public void run() {
           try {
@@ -43,7 +44,8 @@ public class Serveur extends Thread {
 			e.printStackTrace();
 		}
 	}
-	  
+	
+	
 //////////////////class conversation 
 	  
 	 class Conversation extends Thread{
