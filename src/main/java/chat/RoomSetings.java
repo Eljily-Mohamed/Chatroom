@@ -39,10 +39,10 @@ import javafx.stage.Stage;
 public class RoomSetings extends Application {
 
     String item ;
-    PrintWriter pw ;
-    InputStream inputStream ;
-    InputStreamReader isr;           
-    BufferedReader br;
+    PrintWriter pw;
+    InputStream is ;
+    InputStreamReader isr ;
+    BufferedReader br ;
     OutputStream outputStream;
     Socket socket ;
     List<Room> rooms = new ArrayList<>();
@@ -257,9 +257,14 @@ public class RoomSetings extends Application {
                   //end buttons type de room
                   //conexion a serveur pour ajoute le new Room
                   try {
-                    socket = new Socket("localhost", 7777);
+                    socket = new Socket("localhost", 1234);
                     System.out.println("Connected!");
                     // get the output stream from the socket.
+                    is = socket.getInputStream();
+			        isr = new InputStreamReader(is);
+				    br = new BufferedReader(isr);
+                    pw = new PrintWriter(socket.getOutputStream(),true);
+                    pw.print(2);
                     OutputStream outputStream = socket.getOutputStream();
                     // create an object output stream from the output stream so we can send an object through it
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
