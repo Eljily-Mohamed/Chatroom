@@ -19,7 +19,7 @@ public class Serveur extends Thread {
 	  InputStreamReader isr ;
 	  BufferedReader br ;
       //end varaible strem
-      private String action = "";
+      private int action ;
 	  //for action 1
 	  private boolean isActive = true;
 	  private int nmbr_Clients= 0 ;
@@ -43,15 +43,21 @@ public class Serveur extends Thread {
                 is = socket.getInputStream();
 			    isr = new InputStreamReader(is);
 				br = new BufferedReader(isr);
-				action = br.readLine();
-				System.out.println(action);
-				if(action == "1"){
+				try{
+					action = Integer.parseInt(br.readLine());
+					System.out.println(action); // output = 25
+				}
+				catch (NumberFormatException ex){
+					ex.printStackTrace();
+				}
+				if( action == 1){
 					++nmbr_Clients;
 					Conversation conversation = new Conversation(socket,nmbr_Clients);
 					clients.add(conversation);
 					conversation.start();
 				}
-				if(action == "2"){
+				if(action == 2){
+					System.out.println("echo hello world");
                     CreationRoom createdRoom = new CreationRoom(socket);
 					createdRoom.start();
 				}
@@ -173,11 +179,18 @@ public class Serveur extends Thread {
 			 // create a DataInputStream so we can read data from it.
 			 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
              List<Room> listOfRooms = (List<Room>) objectInputStream.readObject();
+
 			 System.out.println("Received [" + listOfRooms.size() + "] infos from: " + socketRoomCr);
 			 rooms.addAll(listOfRooms);
-			 // print out the text of every message
-			 System.out.println("All messages:");
-			 listOfRooms.forEach((msg)-> System.out.println(msg.getName()));
+			 // print the room available for login 
+			 if(!rooms.isEmpty()){
+				System.out.println("les romms available");
+				rooms.forEach((e) -> System.out.println(e.getName())); 
+			}
+			else{
+				System.out.println("Aucune room exsite ");
+			}
+			
 		   } catch (Exception e) {
 			   System.out.println(e);
 		   }
