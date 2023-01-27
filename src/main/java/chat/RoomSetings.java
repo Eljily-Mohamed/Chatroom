@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -41,7 +42,8 @@ public class RoomSetings extends Application {
     InputStream inputStream ;
     InputStreamReader isr;           
     BufferedReader br;
-    
+    OutputStream outputStream;
+    Socket socket ;
     
     public static void main(String[] args) {
         launch(args);
@@ -174,8 +176,10 @@ public class RoomSetings extends Application {
             createButton.setOnAction((Event) -> {
                 if(!textNameRoom.getText().isEmpty()){
 
-                  Room room = new Room("", "") ;
+                //display for this buttons 
 
+                  Room room = new Room("", "") ;
+                            
                   String host = textNameRoom.getText();
                   room.setName(host);
 
@@ -200,7 +204,7 @@ public class RoomSetings extends Application {
                   System.out.println("affichage de buttons chois par user pour selectione  ");
 
 
-        /////buttons type de room 
+                //buttons type de room logique and display for button public 
 
                     privateButton.setOnAction((Eventprivate) -> { 
                     int leftLimit = 48; // numeral '0'
@@ -255,32 +259,31 @@ public class RoomSetings extends Application {
 ////////end buttons type de room
 ////////start connexion a server 
 		 //on va commance cree notre server
-         try {
+        //  try {
             
-            Socket echoSocket = new Socket("localhost", 1234);
-            ObjectOutputStream out = new ObjectOutputStream(echoSocket.getOutputStream());
-            out.writeObject(room);  
+        //     Socket echoSocket = new Socket("localhost", 1234);
+        //     ObjectOutputStream out = new ObjectOutputStream(echoSocket.getOutputStream());
+        //     out.writeObject(room);  
             
-            new Thread(()->{	
-                   while(true) {
-                       try {
-                        String reponse = br.readLine();
-                        Platform.runLater(()->{
+        //     new Thread(()->{	
+        //            while(true) {
+        //                try {
+        //                 String reponse = br.readLine();
+        //                 Platform.runLater(()->{
                        
                              
-                        });
-                       } catch (Exception e) {
-                           // TODO: handle exception
-                           e.printStackTrace();
-                       }
-                   }
-            }).start();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        //                 });
+        //                } catch (Exception e) {
+        //                    // TODO: handle exception
+        //                    e.printStackTrace();
+        //                }
+        //            }
+        //     }).start();
+        // } catch(IOException e) {
+        //     e.printStackTrace();
+        // }
         
            }
-        
                 else{
                     //affichage le nom de la room empty 
                     System.out.println("Empty Room name ");
