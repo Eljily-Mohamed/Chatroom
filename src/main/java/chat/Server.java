@@ -19,11 +19,11 @@ public class Server {
         ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
         // read the list of messages from the socket
-        List<Room> listOfMessages = (List<Room>) objectInputStream.readObject();
-        System.out.println("Received [" + listOfMessages.size() + "] messages from: " + socket);
+        List<Room> listOfRooms = (List<Room>) objectInputStream.readObject();
+        System.out.println("Received [" + listOfRooms.size() + "] messages from: " + socket);
         // print out the text of every message
         System.out.println("All messages:");
-        listOfMessages.forEach((msg)-> System.out.println(msg.getName()));
+        listOfRooms.forEach((msg)-> System.out.println(msg.getName()));
         System.out.println("Closing sockets.");
         ss.close();
         socket.close();
