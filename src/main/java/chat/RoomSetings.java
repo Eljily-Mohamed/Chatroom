@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
@@ -44,6 +45,7 @@ public class RoomSetings extends Application {
     BufferedReader br;
     OutputStream outputStream;
     Socket socket ;
+    List<Room> rooms = new ArrayList<>();
     
     public static void main(String[] args) {
         launch(args);
@@ -212,7 +214,7 @@ public class RoomSetings extends Application {
                     int targetStringLength = 32;
                     Random random = new Random();
                 
-                  String generatedString = random.ints(leftLimit, rightLimit + 1)
+                    String generatedString = random.ints(leftLimit, rightLimit + 1)
                       .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                       .limit(targetStringLength)
                       .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -234,11 +236,7 @@ public class RoomSetings extends Application {
                         e1.printStackTrace();
                     }
                      
-
                   });
-
- 
-
 
                   publicButton.setOnAction((eventPubic) -> {
                        room.setStatu("public");  
@@ -256,32 +254,23 @@ public class RoomSetings extends Application {
                     }
                   });
 
-////////end buttons type de room
-////////start connexion a server 
-		 //on va commance cree notre server
-        //  try {
-            
-        //     Socket echoSocket = new Socket("localhost", 1234);
-        //     ObjectOutputStream out = new ObjectOutputStream(echoSocket.getOutputStream());
-        //     out.writeObject(room);  
-            
-        //     new Thread(()->{	
-        //            while(true) {
-        //                try {
-        //                 String reponse = br.readLine();
-        //                 Platform.runLater(()->{
-                       
-                             
-        //                 });
-        //                } catch (Exception e) {
-        //                    // TODO: handle exception
-        //                    e.printStackTrace();
-        //                }
-        //            }
-        //     }).start();
-        // } catch(IOException e) {
-        //     e.printStackTrace();
-        // }
+                  //end buttons type de room
+                  //conexion a serveur pour ajoute le new Room 
+                  try {
+                    socket = new Socket("localhost", 7777);
+                    System.out.println("Connected!");
+                    // get the output stream from the socket.
+                    OutputStream outputStream = socket.getOutputStream();
+                    // create an object output stream from the output stream so we can send an object through it
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                    rooms.add(room);
+                    System.out.println("Sending messages to the ServerSocket");
+                    objectOutputStream.writeObject(rooms);
+
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
         
            }
                 else{
