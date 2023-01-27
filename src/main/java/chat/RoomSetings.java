@@ -176,12 +176,12 @@ public class RoomSetings extends Application {
                //ajout logique pour la recuperation de la valeur selectione par user   
 
             createButton.setOnAction((Event) -> {
+                 
                 if(!textNameRoom.getText().isEmpty()){
 
                 //display for this buttons 
-
                   Room room = new Room("", "") ;
-                            
+                        
                   String host = textNameRoom.getText();
                   room.setName(host);
 
@@ -213,7 +213,7 @@ public class RoomSetings extends Application {
                     int rightLimit = 122; // letter 'z'
                     int targetStringLength = 32;
                     Random random = new Random();
-                
+                  
                     String generatedString = random.ints(leftLimit, rightLimit + 1)
                       .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                       .limit(targetStringLength)
@@ -222,7 +222,6 @@ public class RoomSetings extends Application {
                     
                     room.setKey(generatedString);
                     room.setStatu("private");
-
                     //   try {
                 
                         //TimeUnit.SECONDS.sleep(5);
@@ -256,32 +255,35 @@ public class RoomSetings extends Application {
 
                   //end buttons type de room
                   //conexion a serveur pour ajoute le new Room
-                  try {
-                    socket = new Socket("localhost", 1234);
-                    System.out.println("Connected!");
-                    // get the output stream from the socket.
-                    is = socket.getInputStream();
-			        isr = new InputStreamReader(is);
-				    br = new BufferedReader(isr);
-                    pw = new PrintWriter(socket.getOutputStream(),true);
-                    pw.println("2");
-                    OutputStream outputStream = socket.getOutputStream();
-                    // create an object output stream from the output stream so we can send an object through it
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                    rooms.add(room);
-                    System.out.println("Sending messages to the ServerSocket");
-                    objectOutputStream.writeObject(rooms);
+       
+                  if(room.getStatu() != ""){
+                    try {
+                        socket = new Socket("localhost", 1234);
+                        System.out.println("Connected!");
+                        // get the output stream from the socket.
+                        is = socket.getInputStream();
+                        isr = new InputStreamReader(is);
+                        br = new BufferedReader(isr);
+                        pw = new PrintWriter(socket.getOutputStream(),true);
+                        pw.println("2");
+                        OutputStream outputStream = socket.getOutputStream();
+                        // create an object output stream from the output stream so we can send an object through it
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                        rooms.add(room);
+                        System.out.println("Sending messages to the ServerSocket");
+                        objectOutputStream.writeObject(rooms);
+    
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+    
+                  }
 
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-        
-           }
-                else{
+             }else{
                     //affichage le nom de la room empty 
                     System.out.println("Empty Room name ");
-                }
+                  }
                  
          });  
 

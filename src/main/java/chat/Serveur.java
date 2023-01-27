@@ -185,12 +185,16 @@ public class Serveur extends Thread {
 			 // print the room available for login 
 			 if(!rooms.isEmpty()){
 				System.out.println("les romms available");
-				rooms.forEach((e) -> System.out.println(e.getName())); 
+				rooms.forEach((e) -> {
+					System.out.println(e.getName());
+					System.out.println(e.getKey());
+					System.out.println(e.getStatu());
+				}); 
 			}
 			else{
 				System.out.println("Aucune room exsite ");
 			}
-			
+
 		   } catch (Exception e) {
 			   System.out.println(e);
 		   }
