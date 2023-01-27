@@ -16,13 +16,18 @@ public class Serveur extends Thread {
 	  PrintWriter pw;
 	  InputStream is ;
 	  InputStreamReader isr ;
-	   BufferedReader br ;
-	  
+	  BufferedReader br ;
+      //end varaible strem
+      private int action;
+	  //for action 1
 	  private boolean isActive = true;
 	  private int nmbr_Clients= 0 ;
 	  private List<String> nomUsres = new ArrayList<String>();
 	  private List<Conversation> clients = new ArrayList<Conversation>();
-	  
+	  //end
+	  //for action 2 
+
+
 	  
 	  public static void main(String[] args) {
 		new Serveur().start();
@@ -34,17 +39,26 @@ public class Serveur extends Thread {
 			ServerSocket serveurSocket = new ServerSocket(1234);
 			while(isActive) {
 				Socket socket = serveurSocket.accept();
-				++nmbr_Clients;	
-				Conversation conversation = new Conversation(socket,nmbr_Clients);
-				clients.add(conversation);
-				conversation.start();
+
+				if(action == 1){
+					++nmbr_Clients;
+					Conversation conversation = new Conversation(socket,nmbr_Clients);
+					clients.add(conversation);
+					conversation.start();
+				}
+				if(action == 2){
+					
+				}
+
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	
+
 	
 //////////////////class conversation 
 	  
@@ -87,6 +101,8 @@ public class Serveur extends Thread {
 		//messgae vers tous monde 
 		
 		}
+		//end methode brodcast vers tous les monde 
+
 		  @Override
 			public void run() {
 				try {
@@ -117,7 +133,7 @@ public class Serveur extends Thread {
 							   brodcast_message(req,socket_client);
 						}
 					}
-					
+	          				
 					
 					
 				} catch (IOException e) {
@@ -125,6 +141,10 @@ public class Serveur extends Thread {
 					e.printStackTrace();
 				}
 			}
+			//end methode run  for class COnversation 
 	 }
+
+	 //end class Conversation 
+
 	  
 }
