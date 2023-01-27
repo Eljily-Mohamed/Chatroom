@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,7 +13,7 @@ import java.util.List;
 
 //on doit cree notre server multithread 
 public class Serveur extends Thread {
-	
+
 	  PrintWriter pw;
 	  InputStream is ;
 	  InputStreamReader isr ;
@@ -26,7 +27,7 @@ public class Serveur extends Thread {
 	  private List<Conversation> clients = new ArrayList<Conversation>();
 	  //end
 	  //for action 2 
-
+	  ArrayList  <Room> rooms = new ArrayList<Room>();
 
 	  
 	  public static void main(String[] args) {
@@ -39,7 +40,10 @@ public class Serveur extends Thread {
 			ServerSocket serveurSocket = new ServerSocket(1234);
 			while(isActive) {
 				Socket socket = serveurSocket.accept();
-
+                is = socket.getInputStream();
+			    isr = new InputStreamReader(is);
+				br = new BufferedReader(isr);
+				action = br.read();
 				if(action == 1){
 					++nmbr_Clients;
 					Conversation conversation = new Conversation(socket,nmbr_Clients);
@@ -47,7 +51,8 @@ public class Serveur extends Thread {
 					conversation.start();
 				}
 				if(action == 2){
-					
+                    CreationRoom createdRoom = new CreationRoom(socket);
+					createdRoom.start();
 				}
 
 			}
@@ -146,5 +151,39 @@ public class Serveur extends Thread {
 
 	 //end class Conversation 
 
+	/**
+	 * InnerServeur
+	 */
+
+
+	class CreationRoom extends Thread{
+         
+		private Socket socketRoomCr ;
+     
+		CreationRoom (Socket socketCLinet){
+           this.socketRoomCr = socketCLinet;
+		}
+		
+		@Override
+		public void run() {
+		   try {
+			 // get the input stream from the connected socket
+			 InputStream inputStream = socketRoomCr.getInputStream();
+			 // create a DataInputStream so we can read data from it.
+			 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+             List<Room> listOfRooms = (List<Room>) objectInputStream.readObject();
+			 System.out.println("Received [" + listOfRooms.size() + "] infos from: " + socketRoomCr);
+			 rooms.addAll(listOfRooms);
+			 // print out the text of every message
+			 System.out.println("All messages:");
+			 listOfRooms.forEach((msg)-> System.out.println(msg.getName()));
+		   } catch (Exception e) {
+			   System.out.println(e);
+		   }
+		}
+
+	 }
+
+	//end class for creation de Room 
 	  
 }
