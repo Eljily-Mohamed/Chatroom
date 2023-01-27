@@ -207,8 +207,8 @@ public class RoomSetings extends Application {
 
 
                 //buttons type de room logique and display for button public 
-
-                    privateButton.setOnAction((Eventprivate) -> { 
+                 
+                    privateButton.setOnMouseClicked((Eventprivate) -> { 
                     int leftLimit = 48; // numeral '0'
                     int rightLimit = 122; // letter 'z'
                     int targetStringLength = 32;
@@ -222,6 +222,7 @@ public class RoomSetings extends Application {
                     
                     room.setKey(generatedString);
                     room.setStatu("private");
+                    createRoom(room);
                     //   try {
                 
                         //TimeUnit.SECONDS.sleep(5);
@@ -254,32 +255,6 @@ public class RoomSetings extends Application {
                   });
 
                   //end buttons type de room
-                  //conexion a serveur pour ajoute le new Room
-       
-                  if(room.getStatu() != ""){
-                    try {
-                        socket = new Socket("localhost", 1234);
-                        System.out.println("Connected!");
-                        // get the output stream from the socket.
-                        is = socket.getInputStream();
-                        isr = new InputStreamReader(is);
-                        br = new BufferedReader(isr);
-                        pw = new PrintWriter(socket.getOutputStream(),true);
-                        pw.println("2");
-                        OutputStream outputStream = socket.getOutputStream();
-                        // create an object output stream from the output stream so we can send an object through it
-                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                        rooms.add(room);
-                        System.out.println("Sending messages to the ServerSocket");
-                        objectOutputStream.writeObject(rooms);
-    
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-    
-                  }
-
              }else{
                     //affichage le nom de la room empty 
                     System.out.println("Empty Room name ");
@@ -357,11 +332,35 @@ logininRoom.setOnAction((Event) -> {
         }
     });
 
-
-
         Scene sceneRoom = new Scene(vboxroot,900,600);
         stage.setScene(sceneRoom);
         stage.setResizable(false);
         stage.show();
     }
+
+
+        //conexion a serveur pour ajoute le new Room
+         void createRoom(Room r){
+               try {
+                        socket = new Socket("localhost", 1234);
+                        System.out.println("Connected!");
+                        // get the output stream from the socket.
+                        is = socket.getInputStream();
+                        isr = new InputStreamReader(is);
+                        br = new BufferedReader(isr);
+                        pw = new PrintWriter(socket.getOutputStream(),true);
+                        pw.println("2");
+                        OutputStream outputStream = socket.getOutputStream();
+                        // create an object output stream from the output stream so we can send an object through it
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                        rooms.add(r);
+                        System.out.println("Sending messages to the ServerSocket");
+                        objectOutputStream.writeObject(rooms);
+    
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+         }
+                 
 }
