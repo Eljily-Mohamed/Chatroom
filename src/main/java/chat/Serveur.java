@@ -19,7 +19,7 @@ public class Serveur extends Thread {
 	  InputStreamReader isr ;
 	  BufferedReader br ;
       //end varaible strem
-      private int action;
+      private String action = "";
 	  //for action 1
 	  private boolean isActive = true;
 	  private int nmbr_Clients= 0 ;
@@ -43,15 +43,15 @@ public class Serveur extends Thread {
                 is = socket.getInputStream();
 			    isr = new InputStreamReader(is);
 				br = new BufferedReader(isr);
-				action = br.read();
+				action = br.readLine();
 				System.out.println(action);
-				if(action == 1){
+				if(action == "1"){
 					++nmbr_Clients;
 					Conversation conversation = new Conversation(socket,nmbr_Clients);
 					clients.add(conversation);
 					conversation.start();
 				}
-				if(action == 2){
+				if(action == "2"){
                     CreationRoom createdRoom = new CreationRoom(socket);
 					createdRoom.start();
 				}

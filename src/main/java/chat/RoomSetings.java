@@ -264,7 +264,7 @@ public class RoomSetings extends Application {
 			        isr = new InputStreamReader(is);
 				    br = new BufferedReader(isr);
                     pw = new PrintWriter(socket.getOutputStream(),true);
-                    pw.print(2);
+                    pw.println("2");
                     OutputStream outputStream = socket.getOutputStream();
                     // create an object output stream from the output stream so we can send an object through it
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
