@@ -362,5 +362,12 @@ logininRoom.setOnAction((Event) -> {
                         e1.printStackTrace();
                     }
          }
+
+         //conexion a server et login  in room specifie using id for this room 
+
+
+         void loginRoom(String room){
+             
+         }
                  
 }
