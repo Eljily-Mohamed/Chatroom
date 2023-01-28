@@ -72,7 +72,7 @@ public class Serveur extends Thread {
 					 System.out.println("Sending Rooms available to client");
 					 objectOutputStream.writeObject(rooms);
 				}
-				if(action == 4 ){
+				if(action == 4){
 					System.out.println("login in the room available to client ");
 					try{
 						idRoom = Integer.parseInt(br.readLine());
@@ -81,6 +81,21 @@ public class Serveur extends Thread {
 					catch (NumberFormatException ex){
 						ex.printStackTrace();
 					}
+
+					rooms.forEach((e) -> {
+						if(e.getIdroom() == idRoom ){
+							try {
+							  OutputStream outputStream = socket.getOutputStream();
+							  ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+							  System.out.println("Sending Room get by id  to client");
+							  objectOutputStream.writeObject(e);					
+							} catch (Exception err) {
+								System.out.println("Error " +err);
+							}
+			
+						}
+					});
+
 				}
 
 			}

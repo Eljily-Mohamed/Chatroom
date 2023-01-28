@@ -48,7 +48,7 @@ public class RoomSetings extends Application {
     BufferedReader br ;
     OutputStream outputStream;
     Socket socket ;
-    
+    String id ;
     public static void main(String[] args) {
         launch(args);
   }
@@ -66,6 +66,7 @@ public class RoomSetings extends Application {
         //on doit connectte a server et recupere le room available 
 
         ArrayList <Room> Romms = new ArrayList<Room>();
+
       
         // Room vietnamese = new Room("Eljily", "Vietnamese");
         // Room english = new Room("Mohamed", "English");
@@ -88,14 +89,13 @@ public class RoomSetings extends Application {
                   .observableArrayList(rooms.entrySet().toArray()));
 
         Label selected = new Label(); 
-        String id;
         //create handler for this comboBox 
         EventHandler<ActionEvent> event =
         new EventHandler<ActionEvent>() {
              public void handle(ActionEvent e){
                 String [] values =cb.getValue().toString().split("=");
                 selected.setText(cb.getValue() + " selected" + values[0]);
-                loginRoom(values[0]);
+                id=values[0];
             }
         };
        
@@ -297,6 +297,9 @@ logininRoom.setOnAction((Event) -> {
         vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
         vboxroot.getChildren().addAll(hboxRoom,hboxAuthe);
         vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
+    
+        loginRoom(id);
+
         
     }
     else{
