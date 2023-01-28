@@ -30,8 +30,9 @@ public class Serveur extends Thread {
 	  //end
 	  //for action 2 
 	  ArrayList  <Room> rooms = new ArrayList<Room>();
+      //for login in room 
+	  private int idRoom;
 
-	  
 	  public static void main(String[] args) {
 		new Serveur().start();
 	}
@@ -70,6 +71,16 @@ public class Serveur extends Thread {
 					 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 					 System.out.println("Sending Rooms available to client");
 					 objectOutputStream.writeObject(rooms);
+				}
+				if(action == 4 ){
+					System.out.println("login in the room available to client ");
+					try{
+						idRoom = Integer.parseInt(br.readLine());
+						System.out.println(idRoom); // output = 25
+					}
+					catch (NumberFormatException ex){
+						ex.printStackTrace();
+					}
 				}
 
 			}

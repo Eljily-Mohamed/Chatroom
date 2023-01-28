@@ -95,6 +95,7 @@ public class RoomSetings extends Application {
              public void handle(ActionEvent e){
                 String [] values =cb.getValue().toString().split("=");
                 selected.setText(cb.getValue() + " selected" + values[0]);
+                loginRoom(values[0]);
             }
         };
        
@@ -368,8 +369,21 @@ logininRoom.setOnAction((Event) -> {
          }
 
          //conexion a server et login  in room specifie using id for this room 
-         void loginRoom(String room){
-             
+         void loginRoom(String idRoom){
+             try {
+                  //utilise in ligne 68 in the same file RoomSetings.java 
+                  socket = new Socket("localhost", 1234);
+                  System.out.println("Connected!");
+                  // get the output stream from the socket.
+                  is = socket.getInputStream();
+                  isr = new InputStreamReader(is);
+                  br = new BufferedReader(isr);
+                  pw = new PrintWriter(socket.getOutputStream(),true);
+                  pw.println("4");
+                  pw.println(idRoom);
+             } catch (Exception e) {
+                // TODO: handle exception
+             }
          }
 
          //fetch the rooms from server
