@@ -48,7 +48,6 @@ public class RoomSetings extends Application {
     BufferedReader br ;
     OutputStream outputStream;
     Socket socket ;
-    List<Room> rooms = new ArrayList<>();
     
     public static void main(String[] args) {
         launch(args);
@@ -80,18 +79,13 @@ public class RoomSetings extends Application {
 
         Map<Integer,String> rooms = new HashMap<>(); 
         
-        Map<Integer, String> primes = new HashMap<>();
-
-        
-        
         for (Room room : Romms) {
-            //rooms.put(room.getNumberRoom(),room.getName());
-            System.out.println(room.getNumberRoom() + " " + room.getName());
+            rooms.put(room.getIdroom(),room.getName());
         }
          //create ComboBox 
         ComboBox cb =
         new ComboBox(FXCollections
-                  .observableArrayList(primes.entrySet().toArray()));
+                  .observableArrayList(rooms.entrySet().toArray()));
 
         Label selected = new Label();
         int id; //pour recupere element id 
@@ -106,7 +100,6 @@ public class RoomSetings extends Application {
         };
        
         cb.setOnAction(event);
-
       
         //creation de notre button qui login a l'un de room available
         Button logininRoom = new Button("Login");
@@ -189,12 +182,12 @@ public class RoomSetings extends Application {
                //ajout logique pour la recuperation de la valeur selectione par user   
 
             createButton.setOnAction((Event) -> {
-                 
+                
                 if(!textNameRoom.getText().isEmpty()){
 
                 //display for this buttons 
+                  
                   Room room = new Room("", "") ;
-                      
                   String host = textNameRoom.getText();
                   room.setName(host);
 
@@ -366,9 +359,8 @@ logininRoom.setOnAction((Event) -> {
                         OutputStream outputStream = socket.getOutputStream();
                         // create an object output stream from the output stream so we can send an object through it
                         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                        rooms.add(r);
                         System.out.println("Sending messages to the ServerSocket");
-                        objectOutputStream.writeObject(rooms);
+                        objectOutputStream.writeObject(r);
     
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block

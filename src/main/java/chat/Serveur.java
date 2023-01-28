@@ -188,10 +188,11 @@ public class Serveur extends Thread {
 			 InputStream inputStream = socketRoomCr.getInputStream();
 			 // create a DataInputStream so we can read data from it.
 			 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-             List<Room> listOfRooms = (List<Room>) objectInputStream.readObject();
+            Room  r = (Room) objectInputStream.readObject();
 
-			 System.out.println("Received [" + listOfRooms.size() + "] infos from: " + socketRoomCr);
-			 rooms.addAll(listOfRooms);
+			 System.out.println("Received [" + r + "] infos from: " + socketRoomCr);
+			 r.setIdroom(rooms.size());
+			 rooms.add(r);
 			 // print the room available for login 
 			 if(!rooms.isEmpty()){
 				System.out.println("les romms available");

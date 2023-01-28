@@ -3,7 +3,6 @@ package chat;
 import java.io.Serializable;
 
 public class Room implements Serializable{
-     private static int numberRoom = 0 ;//room id 
      private int idroom ; 
      private String name ;
      private String statu ;
@@ -12,8 +11,6 @@ public class Room implements Serializable{
      Room (String name, String statu){
         this.name = name;
         this.statu = statu;
-        this.idroom = numberRoom;
-        numberRoom = numberRoom + 1;
      }
 
 
@@ -45,12 +42,11 @@ public class Room implements Serializable{
      }
      //methode pour recupere id de room 
 
-     public static int getNumberRoom() {
-         return numberRoom;
-     }
-
      public int getIdroom() {
          return idroom;
+     }
+     public void setIdroom(int idroom) {
+         this.idroom = idroom;
      }
     
 }
