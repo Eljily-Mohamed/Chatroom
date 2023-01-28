@@ -80,8 +80,15 @@ public class RoomSetings extends Application {
 
         Map<Integer,String> rooms = new HashMap<>(); 
         
+        Map<Integer, String> primes = new HashMap<>();
+        primes.put(2, "TWO");
+        primes.put(3, "THREE");
+        primes.put(5, "FIVE");
+        primes.put(7, "SEVEN");
+        primes.put(11, "ELEVEN");
+        
         for (Room room : Romms) {
-               rooms.put(room.getNumberRoom(),room.getName());
+            rooms.put(room.getNumberRoom(),room.getName());
         }
          //create ComboBox 
         ComboBox cb =
