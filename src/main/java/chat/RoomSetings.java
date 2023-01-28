@@ -77,16 +77,16 @@ public class RoomSetings extends Application {
         // Romms.add(russian);
 
         fetchRooms(Romms);
-        Map<Integer, String> rooms = new HashMap<>(); 
+
+        Map<Integer,String> rooms = new HashMap<>(); 
         
         for (Room room : Romms) {
                rooms.put(room.getNumberRoom(),room.getName());
         }
-          
          //create ComboBox 
         ComboBox cb =
         new ComboBox(FXCollections
-                  .observableArrayList(rooms.toString().substring(1,rooms.toString().length() - 1)));
+                  .observableArrayList(rooms.entrySet().toArray()));
 
         Label selected = new Label();
         int id; //pour recupere element id 
