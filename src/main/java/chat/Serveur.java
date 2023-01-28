@@ -214,7 +214,7 @@ public class Serveur extends Thread {
 			 InputStream inputStream = socketRoomCr.getInputStream();
 			 // create a DataInputStream so we can read data from it.
 			 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            Room  r = (Room) objectInputStream.readObject();
+             Room r = (Room) objectInputStream.readObject();
 
 			 System.out.println("Received [" + r + "] infos from: " + socketRoomCr);
 			 r.setIdroom(rooms.size());

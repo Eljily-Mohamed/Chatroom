@@ -144,7 +144,6 @@ public class RoomSetings extends Application {
         logininPrivate.setFont(Font.font("Comic Sans MS"));
         
 
-
         HBox hboxPrivate = new HBox();
         hboxPrivate.setSpacing(10);
         hboxPrivate.setStyle("-fx-background-color: #DAF7A6 ;"); 
@@ -246,18 +245,19 @@ public class RoomSetings extends Application {
 
                   publicButton.setOnAction((eventPubic) -> {
                        room.setStatu("public");  
-                       try {
-                
-                        TimeUnit.SECONDS.sleep(5);
+                       createRoom(room);
+                    //    try {
+                         
+                        // TimeUnit.SECONDS.sleep(5);
                         Scene scenePrivateRoom = new Scene(hboxRoom,900,600);
                         stage.setScene(scenePrivateRoom);
                         stage.setResizable(false);
                         stage.show();
                         
-                    } catch (InterruptedException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+                    // } catch (InterruptedException e1) {
+                    //     // TODO Auto-generated catch block
+                    //     e1.printStackTrace();
+                    // }
                   });
 
                   //end buttons type de room
@@ -277,7 +277,11 @@ public class RoomSetings extends Application {
 logininRoom.setOnAction((Event) -> {
     if(!selected.getText().isEmpty()){
     String[] words = selected.getText().split(" ");
-        //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
+         
+    int privat= loginRoom(id);
+    System.out.println("id room is : "+privat);
+    if(privat == 1 ){
+           //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
         Text labelAuth = new Text("Private Romm ");
         labelAuth.setFont(Font.font("Comic Sans MS"));
         
@@ -297,13 +301,10 @@ logininRoom.setOnAction((Event) -> {
         vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
         vboxroot.getChildren().addAll(hboxRoom,hboxAuthe);
         vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
-
-        loginRoom(id);
+    }
+    else{
         
-
-
-
-        
+    }        
     }
     else{
         System.out.println("not Room selectione ");
@@ -375,7 +376,7 @@ logininRoom.setOnAction((Event) -> {
          }
 
          //conexion a server et login  in room specifie using id for this room 
-         void loginRoom(String idRoom){
+         int loginRoom(String idRoom){
              try {
                   //utilise in ligne 68 in the same file RoomSetings.java 
                   socket = new Socket("localhost", 1234);
@@ -388,10 +389,24 @@ logininRoom.setOnAction((Event) -> {
                   pw.println("4");
                   pw.println(idRoom);
                   //recupere room and recorede new matche  
-                  
+			      // get the input stream from the connected socket
+			      InputStream inputStream = socket.getInputStream();
+			      // create a DataInputStream so we can read data from it.
+			      ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                  Room r = (Room) objectInputStream.readObject();
+                  System.out.println("Room " + r.getIdroom());
+                  if(r.getStatu().compareTo("private") == 0){
+                       return 1 ;        
+                  }
+                  else{
+                     return 0 ; 
+                  }
+                
              } catch (Exception e) {
                 // TODO: handle exception
              }
+
+            return 0;
          }
 
          //fetch the rooms from server
