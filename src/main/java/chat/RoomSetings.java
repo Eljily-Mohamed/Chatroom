@@ -98,8 +98,6 @@ public class RoomSetings extends Application {
             }
         };
        
-        System.out.println("id selected is : "+id);
-
         cb.setOnAction(event);
       
         //creation de notre button qui login a l'un de room available
