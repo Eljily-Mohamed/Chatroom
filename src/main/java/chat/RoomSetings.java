@@ -10,7 +10,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
@@ -75,25 +77,26 @@ public class RoomSetings extends Application {
         // Romms.add(russian);
 
         fetchRooms(Romms);
-
-        ArrayList <String> namesRooms = new ArrayList<String>();
+        Map<Integer, String> rooms = new HashMap<>(); 
+        
         for (Room room : Romms) {
-               namesRooms.add(room.getName());
+               rooms.put(room.getNumberRoom(),room.getName());
         }
-
           
          //create ComboBox 
         ComboBox cb =
         new ComboBox(FXCollections
-                  .observableArrayList(namesRooms));
+                  .observableArrayList(rooms.keySet()));
 
         Label selected = new Label();
-        
+        int id; //pour recupere element id 
+
         //create handler for this comboBox 
         EventHandler<ActionEvent> event =
         new EventHandler<ActionEvent>() {
              public void handle(ActionEvent e){
                 selected.setText(cb.getValue() + " selected");
+                
             }
         };
        
@@ -393,6 +396,7 @@ logininRoom.setOnAction((Event) -> {
                 //recupere romms list from server and stocket dans notre list que on va retournee 
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 List<Room> listOfRooms = (List<Room>) objectInputStream.readObject();
+                System.out.println("le nombre de rooms egal : " + listOfRooms.size());
                 listRooms.addAll(listOfRooms);
 
              } catch (Exception e) {

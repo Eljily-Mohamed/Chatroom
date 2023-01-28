@@ -41,5 +41,10 @@ public class Room implements Serializable{
      public String toString() {
          return this.name;
      }
+     //methode pour recupere id de room 
+
+     public static int getNumberRoom() {
+         return numberRoom;
+     }
     
 }
