@@ -278,9 +278,9 @@ logininRoom.setOnAction((Event) -> {
     if(!selected.getText().isEmpty()){
     String[] words = selected.getText().split(" ");
          
-    int privat= loginRoom(id);
-    System.out.println("id room is : "+privat);
-    if(privat == 1 ){
+    Room privat = loginRoom(id);
+    System.out.println("id room is : "+privat.getIdroom());
+    if(privat.getStatu().compareToIgnoreCase("private") == 0){
            //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
         Text labelAuth = new Text("Private Romm ");
         labelAuth.setFont(Font.font("Comic Sans MS"));
@@ -301,6 +301,17 @@ logininRoom.setOnAction((Event) -> {
         vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
         vboxroot.getChildren().addAll(hboxRoom,hboxAuthe);
         vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
+
+        buttonAuth.setOnAction((eventAuth) -> {
+            id=textAuth.getText();
+            if(privat.getKey().compareTo(id) == 0){
+                  System.out.println("valide key ");
+            }
+            else{
+                  System.out.println("not valide key ");
+            }
+        });
+
     }
     else{
         
@@ -376,7 +387,7 @@ logininRoom.setOnAction((Event) -> {
          }
 
          //conexion a server et login  in room specifie using id for this room 
-         int loginRoom(String idRoom){
+         Room loginRoom(String idRoom){
              try {
                   //utilise in ligne 68 in the same file RoomSetings.java 
                   socket = new Socket("localhost", 1234);
@@ -394,21 +405,13 @@ logininRoom.setOnAction((Event) -> {
 			      // create a DataInputStream so we can read data from it.
 			      ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                   Room r = (Room) objectInputStream.readObject();
-                  System.out.println("Room " + r.getIdroom());
-                  if(r.getStatu().compareTo("private") == 0){
-                       return 1 ;        
-                  }
-                  else{
-                     return 0 ; 
-                  }
-                
+                  return r;  
+
              } catch (Exception e) {
                 // TODO: handle exception
              }
-
-            return 0;
+            return null;
          }
-
          //fetch the rooms from server
 
          void fetchRooms(ArrayList<Room>  listRooms ){

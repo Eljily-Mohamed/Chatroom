@@ -59,23 +59,23 @@ public class Client extends Application {
 		 //     Game Hangman 
 		 
 		 
-		 Text labelhost = new Text("Host: ");
-		 labelhost.setFont(Font.font("Comic Sans MS"));
-		 TextField textHost = new TextField("localhost"); //cree text filde permet de ajout text
-		 textHost.setFont(Font.font("Comic Sans MS"));
-		 Text labelPort = new Text("Port");
-		 labelPort.setFont(Font.font("Comic Sans MS"));
-		 TextField textPort = new TextField("1234"); //cree text filde permet de ajout text
-		 textPort.setFont(Font.font("Comic Sans MS"));
-		 Button buttonconnexion = new Button("Conx");//creation de notre button
-		 buttonconnexion.setFont(Font.font("Comic Sans MS"));
+		//  Text labelhost = new Text("Host: ");
+		//  labelhost.setFont(Font.font("Comic Sans MS"));
+		//  TextField textHost = new TextField("localhost"); //cree text filde permet de ajout text
+		//  textHost.setFont(Font.font("Comic Sans MS"));
+		//  Text labelPort = new Text("Port");
+		//  labelPort.setFont(Font.font("Comic Sans MS"));
+		//  TextField textPort = new TextField("1234"); //cree text filde permet de ajout text
+		//  textPort.setFont(Font.font("Comic Sans MS"));
+		//  Button buttonconnexion = new Button("Conx");//creation de notre button
+		//  buttonconnexion.setFont(Font.font("Comic Sans MS"));
 		 
 		 
 	     HBox hbox = new HBox();
 	     hbox.setSpacing(10);
 	     hbox.setStyle("-fx-background-color: #DAF7A6 ;"); 
 	     hbox.setPadding(new Insets(10,20,20,10));
-	     hbox.getChildren().addAll(labelhost,textHost,labelPort,textPort,buttonconnexion); 
+	     //hbox.getChildren().addAll(labelhost,textHost,labelPort,textPort,buttonconnexion); 
 	     
 	     
 	     ObservableList<String> listmodel =FXCollections.observableArrayList();
@@ -111,37 +111,37 @@ public class Client extends Application {
 		 primaryStage.show();
 		 
 		 
-		 buttonconnexion.setOnAction((evt)->{
-			 String host = textHost.getText();
-			 int port = Integer.parseInt(textPort.getText());
+		//  buttonconnexion.setOnAction((evt)->{
+		// 	 String host = textHost.getText();
+		// 	 int port = Integer.parseInt(textPort.getText());
 
 
-			 //on va commance cree notre server
-			 try {
-				 Socket socket = new Socket(host,port);
-				 InputStream inputStream = socket.getInputStream();
-				 InputStreamReader isr = new InputStreamReader(inputStream);
+		// 	 //on va commance cree notre server
+		// 	 try {
+		// 		 Socket socket = new Socket(host,port);
+		// 		 InputStream inputStream = socket.getInputStream();
+		// 		 InputStreamReader isr = new InputStreamReader(inputStream);
 				 
-				 BufferedReader br = new BufferedReader(isr);
-				 pw = new PrintWriter(socket.getOutputStream(),true);
-				 new Thread(()->{	
-					    while(true) {
-					    	try {
-					     	String reponse = br.readLine();
-					     	Platform.runLater(()->{
-					     	listmodel.add(reponse);
-					     	});
-					    	} catch (Exception e) {
-								// TODO: handle exception
-								e.printStackTrace();
-							}
-					    }
-				 }).start();
-			 } catch(IOException e) {
-				 e.printStackTrace();
-			 }
+		// 		 BufferedReader br = new BufferedReader(isr);
+		// 		 pw = new PrintWriter(socket.getOutputStream(),true);
+		// 		 new Thread(()->{	
+		// 			    while(true) {
+		// 			    	try {
+		// 			     	String reponse = br.readLine();
+		// 			     	Platform.runLater(()->{
+		// 			     	listmodel.add(reponse);
+		// 			     	});
+		// 			    	} catch (Exception e) {
+		// 						// TODO: handle exception
+		// 						e.printStackTrace();
+		// 					}
+		// 			    }
+		// 		 }).start();
+		// 	 } catch(IOException e) {
+		// 		 e.printStackTrace();
+		// 	 }
 			 
-		 });
+		//  });
 
 		 //on doit utilse function for checking this stat
 		 
@@ -153,7 +153,5 @@ public class Client extends Application {
               System.out.println(""+messge);
               pw.println(messge);
 		 });
-		 
-
 	}
 }
