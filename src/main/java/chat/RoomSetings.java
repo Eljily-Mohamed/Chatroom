@@ -297,8 +297,11 @@ logininRoom.setOnAction((Event) -> {
         vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
         vboxroot.getChildren().addAll(hboxRoom,hboxAuthe);
         vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
-    
+
         loginRoom(id);
+        
+
+
 
         
     }
@@ -384,6 +387,8 @@ logininRoom.setOnAction((Event) -> {
                   pw = new PrintWriter(socket.getOutputStream(),true);
                   pw.println("4");
                   pw.println(idRoom);
+                  //recupere room and recorede new matche  
+                  
              } catch (Exception e) {
                 // TODO: handle exception
              }
