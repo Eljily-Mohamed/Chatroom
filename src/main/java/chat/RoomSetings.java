@@ -86,7 +86,7 @@ public class RoomSetings extends Application {
          //create ComboBox 
         ComboBox cb =
         new ComboBox(FXCollections
-                  .observableArrayList(rooms.keySet()));
+                  .observableArrayList(rooms.toString().substring(1,rooms.toString().length() - 1)));
 
         Label selected = new Label();
         int id; //pour recupere element id 
