@@ -306,7 +306,12 @@ logininRoom.setOnAction((Event) -> {
             id=textAuth.getText();
             if(privat.getKey().compareTo(id) == 0){
                   System.out.println("valide key ");
-                  connexion(privat.getIdroom());
+                  try {
+                    connexion(privat.getIdroom(),stage);
+                } catch (Exception e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
             else{
                   System.out.println("not valide key ");
@@ -415,9 +420,10 @@ logininRoom.setOnAction((Event) -> {
          }
          
          //connexion in Room specifique 
-         void connexion(int idRoom){
+         void connexion(int idRoom, Stage Stage) throws Exception{
             System.out.println("Connexion in room chat ");
             Client client = new Client();
+            client.start(Stage);
             
          }
 

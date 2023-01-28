@@ -115,31 +115,31 @@ public class Client extends Application {
 		// 	 String host = textHost.getText();
 		// 	 int port = Integer.parseInt(textPort.getText());
 
-
-		// 	 //on va commance cree notre server
-		// 	 try {
-		// 		 Socket socket = new Socket(host,port);
-		// 		 InputStream inputStream = socket.getInputStream();
-		// 		 InputStreamReader isr = new InputStreamReader(inputStream);
+			 //on va commance cree notre server
+			 try {
+				 Socket socket = new Socket("localhost",1234);
+				 InputStream inputStream = socket.getInputStream();
+				 InputStreamReader isr = new InputStreamReader(inputStream);
 				 
-		// 		 BufferedReader br = new BufferedReader(isr);
-		// 		 pw = new PrintWriter(socket.getOutputStream(),true);
-		// 		 new Thread(()->{	
-		// 			    while(true) {
-		// 			    	try {
-		// 			     	String reponse = br.readLine();
-		// 			     	Platform.runLater(()->{
-		// 			     	listmodel.add(reponse);
-		// 			     	});
-		// 			    	} catch (Exception e) {
-		// 						// TODO: handle exception
-		// 						e.printStackTrace();
-		// 					}
-		// 			    }
-		// 		 }).start();
-		// 	 } catch(IOException e) {
-		// 		 e.printStackTrace();
-		// 	 }
+				 BufferedReader br = new BufferedReader(isr);
+				 pw = new PrintWriter(socket.getOutputStream(),true);
+				 pw.println("1");
+				 new Thread(()->{	
+					    while(true) {
+					    	try {
+					     	String reponse = br.readLine();
+					     	Platform.runLater(()->{
+					     	listmodel.add(reponse);
+					     	});
+					    	} catch (Exception e) {
+								// TODO: handle exception
+								e.printStackTrace();
+							}
+					    }
+				 }).start();
+			 } catch(IOException e) {
+				 e.printStackTrace();
+			 }
 			 
 		//  });
 
