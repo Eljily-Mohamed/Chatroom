@@ -87,18 +87,19 @@ public class RoomSetings extends Application {
         new ComboBox(FXCollections
                   .observableArrayList(rooms.entrySet().toArray()));
 
-        Label selected = new Label();
-        int id; //pour recupere element id 
-
+        Label selected = new Label(); 
+        String id;
         //create handler for this comboBox 
         EventHandler<ActionEvent> event =
         new EventHandler<ActionEvent>() {
              public void handle(ActionEvent e){
-                selected.setText(cb.getValue() + " selected");
-                
+                String [] values =cb.getValue().toString().split("=");
+                selected.setText(cb.getValue() + " selected" + values[0]);
             }
         };
        
+        System.out.println("id selected is : "+id);
+
         cb.setOnAction(event);
       
         //creation de notre button qui login a l'un de room available
