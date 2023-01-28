@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -61,15 +62,19 @@ public class RoomSetings extends Application {
         //cree text for display for identifie le room available 
 
         //creating checkboxes for rentre dans une chat room available
+        //on doit connectte a server et recupere le room available 
+
         ArrayList <Room> Romms = new ArrayList<Room>();
       
-        Room vietnamese = new Room("Eljily", "Vietnamese");
-        Room english = new Room("Mohamed", "English");
-        Room russian = new Room("Ahmed", "Russian");
+        // Room vietnamese = new Room("Eljily", "Vietnamese");
+        // Room english = new Room("Mohamed", "English");
+        // Room russian = new Room("Ahmed", "Russian");
         
-        Romms.add(vietnamese);
-        Romms.add(english);
-        Romms.add(russian);
+        // Romms.add(vietnamese);
+        // Romms.add(english);
+        // Romms.add(russian);
+
+        fetchRooms(Romms);
 
         ArrayList <String> namesRooms = new ArrayList<String>();
         for (Room room : Romms) {
@@ -364,10 +369,36 @@ logininRoom.setOnAction((Event) -> {
          }
 
          //conexion a server et login  in room specifie using id for this room 
-
-
          void loginRoom(String room){
              
+         }
+
+         //fetch the rooms from server
+
+         void fetchRooms(ArrayList<Room>  listRooms ){
+             
+            try {
+
+                //utilise in ligne 68 in the same file RoomSetings.java 
+                socket = new Socket("localhost", 1234);
+                System.out.println("Connected!");
+                // get the output stream from the socket.
+                is = socket.getInputStream();
+                isr = new InputStreamReader(is);
+                br = new BufferedReader(isr);
+                pw = new PrintWriter(socket.getOutputStream(),true);
+                pw.println("3");
+                 // get the input stream from the connected socket
+			    InputStream inputStream = socket.getInputStream();
+                //recupere romms list from server and stocket dans notre list que on va retournee 
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                List<Room> listOfRooms = (List<Room>) objectInputStream.readObject();
+                listRooms.addAll(listOfRooms);
+
+             } catch (Exception e) {
+                // TODO: handle exception
+             }
+
          }
                  
 }

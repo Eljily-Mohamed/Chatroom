@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -60,6 +62,14 @@ public class Serveur extends Thread {
 					System.out.println("echo hello world");
                     CreationRoom createdRoom = new CreationRoom(socket);
 					createdRoom.start();
+				}
+				if(action  == 3 ){
+					 System.out.println("fetch Data from server ") ;
+					 // get the input stream from the connected socket
+					 OutputStream outputStream = socket.getOutputStream();
+					 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+					 System.out.println("Sending Rooms available to client");
+					 objectOutputStream.writeObject(rooms);
 				}
 
 			}
@@ -203,5 +213,6 @@ public class Serveur extends Thread {
 	 }
 
 	//end class for creation de Room 
-	  
+    //start class for fetching rooms and envoi tous client 
+	
 }
