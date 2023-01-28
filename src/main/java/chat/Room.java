@@ -3,7 +3,7 @@ package chat;
 import java.io.Serializable;
 
 public class Room implements Serializable{
-     private static int numberRoom;//room id 
+     private static int numberRoom = 0 ;//room id 
      private int idroom ; 
      private String name ;
      private String statu ;

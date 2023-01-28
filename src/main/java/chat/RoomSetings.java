@@ -194,7 +194,7 @@ public class RoomSetings extends Application {
 
                 //display for this buttons 
                   Room room = new Room("", "") ;
-                        
+                      
                   String host = textNameRoom.getText();
                   room.setName(host);
 
