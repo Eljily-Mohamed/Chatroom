@@ -199,6 +199,7 @@ public class Serveur extends Thread {
 					System.out.println(e.getName());
 					System.out.println(e.getKey());
 					System.out.println(e.getStatu());
+					System.out.println(e.getIdroom());
 				}); 
 			}
 			else{
