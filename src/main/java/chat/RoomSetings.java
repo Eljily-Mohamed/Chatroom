@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -32,15 +31,20 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class RoomSetings extends Application {
 
-    String item ;
+public class RoomSetings extends Application {
+    
+    //varaibles for the room setings
+    String item ; //item name 
+    //Stream
     PrintWriter pw;
     InputStream is ;
     InputStreamReader isr ;
     BufferedReader br ;
     OutputStream outputStream;
+    //socket connection
     Socket socket ;
+    //id for user pour get room user
     String id ;
 
 
@@ -50,27 +54,17 @@ public class RoomSetings extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+	    //*************************************//
+	    //***********  Affichage  *************//
+
         stage.setTitle("Room Chat");
         Text textRoom = new Text("Room Available: ");
 		textRoom.setFont(Font.font("Comic Sans MS"));
-       
 
-        //cree text for display for identifie le room available 
-
-        //creating checkboxes for rentre dans une chat room available
-        //on doit connectte a server et recupere le room available 
-
+        //qui recupere le nombre de Rooms 
         ArrayList <Room> Romms = new ArrayList<Room>();
-
-      
-        // Room vietnamese = new Room("Eljily", "Vietnamese");
-        // Room english = new Room("Mohamed", "English");
-        // Room russian = new Room("Ahmed", "Russian");
-        
-        // Romms.add(vietnamese);
-        // Romms.add(english);
-        // Romms.add(russian);
-
+        //appelle a la fonction fetche Rooms ligne:
         fetchRooms(Romms);
 
         Map<Integer,String> rooms = new HashMap<>(); 
