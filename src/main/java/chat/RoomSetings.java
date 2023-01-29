@@ -411,7 +411,6 @@ logininRoom.setOnAction((Event) -> {
             System.out.println("Connexion in room chat ");
             Client client = new Client(idRoom);
             client.start(Stage);
-
          }
 
          //fetch the rooms from server

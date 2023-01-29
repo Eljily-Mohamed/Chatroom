@@ -133,17 +133,17 @@ public class Serveur extends Thread {
 		 
 
 		//public void brodcast_message(String message,Socket socket, String nomUser)
-		 public void brodcast_message(String message,Socket socket,int idRoom){
+		 public void brodcast_message(String message,Socket socketC){
 			
 		//for(String nomClient:nomUsres) {
 
 			 for (Conversation client:clients) {
 				 try {
 					  //if (nomClient.equals(nomUser)) {
-					    if(client.socket_client != socket) {
+					    if(client.socket_client != socketC) {
 					    	 pw = new PrintWriter(client.socket_client.getOutputStream(),true);
-							 pw.println(message); 
-							   break;
+							 pw.println(message);
+							 break;
 					    } 
 //					    else {
 //					    	 pw = new PrintWriter(client.socket_client.getOutputStream(),true);
@@ -181,18 +181,18 @@ public class Serveur extends Thread {
 					while(true) {
 						String req=br.readLine();
 						System.out.println(req);
-						String req_Reponse[] = req.split(":");
-						System.out.println(req);
-						if(req_Reponse.length == 2) {
-							String nomClient = req_Reponse[0];
-							String message = req_Reponse[1];
-							 //brodcast_message(message,socket_client,nomClient);	
-							   brodcast_message(message,socket_client,nmbr_Room);
-						}
-						else {
+						// String req_Reponse[] = req.split(":");
+						// System.out.println(req);
+						// if(req_Reponse.length == 2) {
+						// 	String nomClient = req_Reponse[0];
+						// 	String message = req_Reponse[1];
+						// 	 //brodcast_message(message,socket_client,nomClient);	
+						// 	   brodcast_message(message,socket_client);
+						// }
+						// else {
 							 //brodcast_message(req,socket_client,"unll");
-							   brodcast_message(req,socket_client,nmbr_Room);
-						}
+							   brodcast_message(req,socket_client);
+						// }
 					}
 	          				
 					
