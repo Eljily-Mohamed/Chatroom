@@ -1,4 +1,4 @@
-package chat;
+package chat.Messagrie;
 
 //for socket communication
 import java.io.BufferedInputStream;

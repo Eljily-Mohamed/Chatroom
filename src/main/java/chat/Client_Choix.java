@@ -1,4 +1,5 @@
 package chat;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,63 +14,67 @@ import javafx.stage.Stage;
 
 public class Client_Choix extends Application {
 
+	private Scene scene;
+
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
           launch(args);  
 	}
-    
-	// this is stat number 1  
+ 
 	@Override
 	public void start(Stage stage) throws Exception {
-		// TODO Auto-generated method stub
 
-
+             //start 1ere BorderPanel
 		     BorderPane BP1 = new BorderPane();
-		    //creation de notre title 
-		     Text title_text = new Text("VOICI LES SERVICES ");
-		     title_text.setFont(Font.font("Comic Sans MS",13));
-		     
-			 //Hboxe for choose the service user 
+		     //Message to Know the Service Provider
+		     Text titletext = new Text("VOICI LES SERVICES ");
+		     titletext.setFont(Font.font("Comic Sans MS",13));
+			 //start Hboxe to choose the service 
 		     HBox hbox = new HBox();
 		     hbox.setSpacing(10);
 		     hbox.setStyle("-fx-background-color: #0057B8 ;"); 
 		     hbox.setPadding(new Insets(30));
-	
+	         //end Hbox
+
 		     BP1.setTop(hbox);
 		     
 			 //text  for hello user 
-		     Text Text_helo = new Text("Helo world");
-		     Text_helo.setFont(Font.font("Comic Sans MS",13));
-             Text_helo.setX(110);
-             Text_helo.setY(100);
-		    
-		     //les differnets buttons
-		     Button button_chat = new Button("Messagrie      ");//creation de notre button
-			 button_chat.setFont(Font.font("Comic Sans MS",15));
-			 button_chat.setLayoutX(23);
-			 Button button_file = new Button("Transfere File ");//creation de notre button
-			 button_file.setFont(Font.font("Comic Sans MS",15));
-			 VBox vbox_buttons = new VBox();
-			 vbox_buttons.setSpacing(10);
-			 vbox_buttons.setStyle("-fx-background-color: #FFF ;"); 
-			 vbox_buttons.setPadding(new Insets(10));
-			 vbox_buttons.getChildren().addAll(title_text,button_chat,button_file);
-			 vbox_buttons.setAlignment(Pos.CENTER);
-			 BP1.setCenter(vbox_buttons);
+		     Text textHelo = new Text("Helo world");
+		     textHelo.setFont(Font.font("Comic Sans MS",13));
+             textHelo.setX(110);
+             textHelo.setY(100);
+
+		     //buttons for each service
+		     Button buttonChat = new Button("Messagrie      ");
+			 buttonChat.setFont(Font.font("Comic Sans MS",15));
+			 buttonChat.setLayoutX(23);
+
+			 Button buttonFile = new Button("Transfere File ");
+			 buttonFile.setFont(Font.font("Comic Sans MS",15));
+
+             //start vbox contient buttons
+			 VBox vboxButtons = new VBox();
+			 vboxButtons.setSpacing(10);
+			 vboxButtons.setStyle("-fx-background-color: #FFF ;"); 
+			 vboxButtons.setPadding(new Insets(10));
+			 vboxButtons.getChildren().addAll(titletext,buttonChat,buttonFile);
+			 vboxButtons.setAlignment(Pos.CENTER);
+             //end vbox_buttons
+
+			 BP1.setCenter(vboxButtons);
 		     
-		    //on cree une vbox va s'affcihe 
-		    VBox vbox_service = new VBox();
-		    vbox_service.setSpacing(10);
-		    vbox_service.setStyle("-fx-background-color: #FFD700 ;"); 
-		    vbox_service.setPadding(new Insets(40));
-		    BP1.setBottom(vbox_service); 
+		    //start vbox for Footer
+		    VBox vboxFooter = new VBox();
+		    vboxFooter.setSpacing(10);
+		    vboxFooter.setStyle("-fx-background-color: #FFD700 ;"); 
+		    vboxFooter.setPadding(new Insets(40));
+		    BP1.setBottom(vboxFooter); 
 			
-			//et aussi notre Scene 
-		    Scene scen1 = new Scene(BP1,900,600);
-		    stage.setScene(scen1);
+			//Display this Scene in stage 
+		    scene = new Scene(BP1,900,600);
+		    stage.setScene(scene);
 		    stage.setResizable(false);
 		    stage.show();
 
-  }
+   }
 
 }
