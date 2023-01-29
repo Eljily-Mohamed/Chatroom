@@ -126,7 +126,8 @@ public class Client extends Application {
 				 BufferedReader br = new BufferedReader(isr);
 				 pw = new PrintWriter(socket.getOutputStream(),true);
 				 pw.println("1");
-				 String idRoomString=String.valueOf(idRoom);  
+				 String idRoomString=String.valueOf(idRoom); 
+				 System.out.println("idRoom" + idRoomString); 
 				 pw.println(idRoom);
 				 new Thread(()->{	
 					    while(true) {

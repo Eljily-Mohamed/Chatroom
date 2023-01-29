@@ -409,6 +409,7 @@ logininRoom.setOnAction((Event) -> {
          //connexion in Room specifique 
          void connexion(int idRoom, Stage Stage) throws Exception{
             System.out.println("Connexion in room chat ");
+            System.out.println("idRoom" + idRoom);
             Client client = new Client(idRoom);
             client.start(Stage);
          }
