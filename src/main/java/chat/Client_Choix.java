@@ -88,8 +88,8 @@ public class Client_Choix extends Application {
 				}
 			});
 
-			//for button on va faire apres 
-          
+			//send file 
+
 
 			//Display this Scene in stage 
 		    scene = new Scene(BP1,900,600);//width, height

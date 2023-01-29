@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,12 +62,13 @@ public class RoomSetings extends Application {
         stage.setTitle("Room Chat");
         Text textRoom = new Text("Room Available: ");
 		textRoom.setFont(Font.font("Comic Sans MS"));
-
+        
         //qui recupere le nombre de Rooms 
         ArrayList <Room> Romms = new ArrayList<Room>();
         //appelle a la fonction fetche Rooms ligne:
+        connexionEtabler("3");
         fetchRooms(Romms);
-
+        //creation de Map qui contient id de Room with le nom de Room 
         Map<Integer,String> rooms = new HashMap<>(); 
         
         for (Room room : Romms) {
@@ -345,6 +347,38 @@ logininRoom.setOnAction((Event) -> {
     }
 
 
+             //*************************************//
+	        //***********  functions  *************//
+
+    //function qui permet de recupere le room available from server 
+    void fetchRooms(ArrayList<Room>  listRooms ){        
+       try {
+            // get the input stream from the connected socket
+            InputStream inputStream = socket.getInputStream();
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+
+            //recupere romms list from server and stocket dans notre list que on va retournee 
+            List<Room> listOfRooms = (List<Room>) objectInputStream.readObject();
+            //System.out.println("le nombre de rooms egal : " + listOfRooms.size());
+            listRooms.addAll(listOfRooms);
+        }catch (Exception e) {
+            System.out.println("error : " + e);
+        }
+    }
+
+     //function permet de etablier connexion 
+     void connexionEtabler(String reqType) throws Exception{
+                //utilise in ligne 68 in the same file RoomSetings.java 
+                socket = new Socket("localhost", 1234);
+                System.out.println("Connected!");
+                // get the output stream from the socket.
+                is = socket.getInputStream();
+                isr = new InputStreamReader(is);
+                br = new BufferedReader(isr);
+                pw = new PrintWriter(socket.getOutputStream(),true);
+                pw.println(reqType);                
+     }
+
         //conexion a serveur pour ajoute le new Room
          void createRoom(Room r){
                try {
@@ -401,35 +435,6 @@ logininRoom.setOnAction((Event) -> {
             System.out.println("idRoom" + idRoom);
             Client client = new Client(idRoom);
             client.start(Stage);
-         }
-
-         //fetch the rooms from server
-
-         void fetchRooms(ArrayList<Room>  listRooms ){
-             
-            try {
-
-                //utilise in ligne 68 in the same file RoomSetings.java 
-                socket = new Socket("localhost", 1234);
-                System.out.println("Connected!");
-                // get the output stream from the socket.
-                is = socket.getInputStream();
-                isr = new InputStreamReader(is);
-                br = new BufferedReader(isr);
-                pw = new PrintWriter(socket.getOutputStream(),true);
-                pw.println("3");
-                 // get the input stream from the connected socket
-			    InputStream inputStream = socket.getInputStream();
-                //recupere romms list from server and stocket dans notre list que on va retournee 
-                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                List<Room> listOfRooms = (List<Room>) objectInputStream.readObject();
-                System.out.println("le nombre de rooms egal : " + listOfRooms.size());
-                listRooms.addAll(listOfRooms);
-
-             } catch (Exception e) {
-                // TODO: handle exception
-             }
-
          }
                  
 }
