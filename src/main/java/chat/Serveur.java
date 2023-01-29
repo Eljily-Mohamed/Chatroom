@@ -140,7 +140,7 @@ public class Serveur extends Thread {
 			 for (Conversation client:clients) {
 				 try {
 					  //if (nomClient.equals(nomUser)) {
-					    if(client.socket_client != socket && client.nmbr_Room == this.nmbr_Room) {
+					    if(client.socket_client != socket) {
 					    	 pw = new PrintWriter(client.socket_client.getOutputStream(),true);
 							 pw.println(message); 
 							   break;

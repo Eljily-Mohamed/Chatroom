@@ -128,7 +128,7 @@ public class Client extends Application {
 				 pw.println("1");
 				 String idRoomString=String.valueOf(idRoom);  
 				 pw.println(idRoom);
-				 new Thread(()->{	
+				 //new Thread(()->{	
 					    while(true) {
 					    	try {
 					     	String reponse = br.readLine();
@@ -140,7 +140,7 @@ public class Client extends Application {
 								e.printStackTrace();
 							}
 					    }
-				 }).start();
+				// }).start();
 			 } catch(IOException e) {
 				 e.printStackTrace();
 			 }
@@ -150,7 +150,7 @@ public class Client extends Application {
 		 //on doit utilse function for checking this stat
 		 //logique for button Envoyer 
 		 
-		 buttonEnvoyer.setOnAction((evt)->{
+		 buttonEnvoyer.setOnMouseClicked((evt)->{
               String messge = textmessge.getText();
               System.out.println(""+messge);
               pw.println(messge);

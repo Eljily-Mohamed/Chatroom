@@ -228,36 +228,23 @@ public class RoomSetings extends Application {
                     room.setKey(generatedString);
                     room.setStatu("private");
                     createRoom(room);
-                    //   try {
-                
-                        //TimeUnit.SECONDS.sleep(5);
-                        Scene scenePrivateRoom = new Scene(hboxRoom,900,600);
-                        stage.setScene(scenePrivateRoom);
-                        stage.setResizable(false);
-                        stage.show();
-                        
-                    // } catch (InterruptedException e1) {
-                    //     // TODO Auto-generated catch block
-                    //     e1.printStackTrace();
-                    // }
-                     
+                    try {  
+                      connexion(rooms.size(),stage);
+                    } catch (Exception e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
                   });
 
                   publicButton.setOnAction((eventPubic) -> {
                        room.setStatu("public");  
                        createRoom(room);
-                    //    try {
-                         
-                        // TimeUnit.SECONDS.sleep(5);
-                        Scene scenePrivateRoom = new Scene(hboxRoom,900,600);
-                        stage.setScene(scenePrivateRoom);
-                        stage.setResizable(false);
-                        stage.show();
-                        
-                    // } catch (InterruptedException e1) {
-                    //     // TODO Auto-generated catch block
-                    //     e1.printStackTrace();
-                    // }
+                       try {
+                          connexion(rooms.size(),stage);
+                    } catch (Exception e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
                   });
 
                   //end buttons type de room
@@ -384,7 +371,7 @@ logininRoom.setOnAction((Event) -> {
                         // create an object output stream from the output stream so we can send an object through it
                         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
                         System.out.println("Sending messages to the ServerSocket");
-                        objectOutputStream.writeObject(r);
+                        objectOutputStream.writeObject(r);          
     
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
