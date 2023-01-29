@@ -26,7 +26,7 @@ public class Serveur extends Thread {
 	  //for action 1
 	  private boolean isActive = true;
 	  //private int nmbr_Clients= 0 ;
-	  private int nmbr_Room;
+	  private static int nmbr_Roomlogin;
 	  //private List<String> nomUsres = new ArrayList<String>();
 	  //private List<Conversation> clients = new ArrayList<Conversation>();
 	  //end
@@ -57,8 +57,8 @@ public class Serveur extends Thread {
 				}
 				if( action == 1){
 					try{
-						nmbr_Room = Integer.parseInt(br.readLine());
-						System.out.println("idRoom" + nmbr_Room); // 
+						nmbr_Roomlogin = Integer.parseInt(br.readLine());
+						System.out.println("idRoom" + nmbr_Roomlogin); // 
 					}
 					catch (NumberFormatException ex){
 						ex.printStackTrace();
@@ -134,9 +134,8 @@ public class Serveur extends Thread {
 	
 		public Conversation(Socket nsock) {
 			sc = nsock;
-			this.nmbr_Room = nmbr_Room;
+			this.nmbr_Room = nmbr_Roomlogin;
 			add();
-			System.out.println("Conversation created with id "+this.nmbr_Room);
 			//add this to the arraylist, one instance/thread for every connection.
 		}
 	
