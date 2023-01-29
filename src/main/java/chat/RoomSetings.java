@@ -112,8 +112,8 @@ public class RoomSetings extends Application {
         hboxRoom.getChildren().addAll(selected,textRoom,cb,logininRoom);
         hboxRoom.setAlignment(Pos.CENTER);
         
-          //*************************************//
-	    //***********  Sectione 2  *************//
+        //*************************************//
+	    //***********  Sectione 2 *************//
 
         /*sectione 2 : qui contient creation de Chat privee */
     
@@ -127,22 +127,20 @@ public class RoomSetings extends Application {
         new ComboBox(FXCollections
                 .observableArrayList(privateChoix));
     
-                Label selectedPrivate = new Label();
+        Label selectedPrivate = new Label();
 
-                //create handler for this comboBox 
-                EventHandler<ActionEvent> eventPrivate =
+        //create handler for this comboBox 
+        EventHandler<ActionEvent> eventPrivate = 
                 new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent e){
                         selectedPrivate.setText(cbPrivate.getValue() + "");
                     }
-                };
-                
-                        cbPrivate.setOnAction(eventPrivate);
+                };        
+        cbPrivate.setOnAction(eventPrivate);
     
         Button logininPrivate = new Button("Login");
         logininPrivate.setFont(Font.font("Comic Sans MS"));
         
-
         HBox hboxPrivate = new HBox();
         hboxPrivate.setSpacing(10);
         hboxPrivate.setStyle("-fx-background-color: #DAF7A6 ;"); 
@@ -150,8 +148,12 @@ public class RoomSetings extends Application {
         hboxPrivate.getChildren().addAll(textPrivate,cbPrivate,logininPrivate);
         hboxPrivate.setAlignment(Pos.CENTER);
         
+         
+        //*************************************//
+	    //***********  Sectione 3 *************//
 
-        //////////////////////////HBOX for creation de romm 
+        /*sectione 3 : pour creation de Room et specifie private ou public  */
+        
          
         Text labelcree = new Text("Cree Your Room");
         labelcree.setFont(Font.font("Comic Sans MS"));
@@ -173,22 +175,20 @@ public class RoomSetings extends Application {
         vboxroot.setMargin(hboxCraetion,new Insets(30,0,0,0) );
         vboxroot.setAlignment(Pos.CENTER);
 
-////////////////////////////////////////////////////////////////////////////////////Logique for buttons 
 
-//////////////////////buton 1
+             //*************************************//
+	        //***********  logique  ***************//
 
-               //ajout logique pour la recuperation de la valeur selectione par user   
+	    //logique sectione 3
 
-            createButton.setOnAction((Event) -> {
-                
-                if(!textNameRoom.getText().isEmpty()){
-
-                //display for this buttons 
-                  
+        createButton.setOnAction((Event) -> { 
+            if(!textNameRoom.getText().isEmpty()){
+                  //display for this buttons 
                   Room room = new Room("", "") ;
                   String host = textNameRoom.getText();
                   room.setName(host);
-
+                  
+                  
                   Button privateButton = new Button("Private");
                   privateButton.setFont(Font.font("Comic Sans MS"));
                    
