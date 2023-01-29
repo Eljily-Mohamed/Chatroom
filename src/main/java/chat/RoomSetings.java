@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -337,39 +336,38 @@ public class RoomSetings extends Application {
         });
 
 
-       //logique sectione 2
+        //logique sectione 2 
+  
+        logininPrivate.setOnAction((Event) -> {
+                if(!selectedPrivate.getText().isEmpty()){
+                        String[] words = selectedPrivate.getText().split("->");
+                        //recupere le cle de comminique numero ou bien nom
+                        Text labelAuth = new Text("Cle comminucation ");
+                        labelAuth.setFont(Font.font("Comic Sans MS"));
+                        //pour recupere le cle de comminication 
+                        TextField textAuth = new TextField("Add Your" +words[1]); //cree text filde permet de ajout text
+                        textAuth.setFont(Font.font("Comic Sans MS"));
+                        textAuth.setPrefSize(300, 30);
+                
+                        Button buttonAuth = new Button("Login");//creation de notre button
+                        buttonAuth.setFont(Font.font("Comic Sans MS"));
+                                
+                        HBox hboxAuthe = new HBox();
+                        hboxAuthe.setSpacing(10);
+                        hboxAuthe.setPadding(new Insets(10,20,20,10));
+                        hboxAuthe.getChildren().addAll(labelAuth,textAuth,buttonAuth);
+                        hboxAuthe.setAlignment(Pos.CENTER);
+                        
+                        vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
+                        vboxroot.getChildren().addAll(hboxPrivate,hboxAuthe);
+                        vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
+                }
+                else{
+                    System.out.println("doit specifie le cle de comminication ");
+                }
+        });
 
-      
-      logininPrivate.setOnAction((Event) -> {
-        if(!selectedPrivate.getText().isEmpty()){
-        String[] words = selectedPrivate.getText().split("->");
-             //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
-        Text labelAuth = new Text("Cle comminucation ");
-        labelAuth.setFont(Font.font("Comic Sans MS"));
-        
-        TextField textAuth = new TextField("Add Your" +words[1]); //cree text filde permet de ajout text
-        textAuth.setFont(Font.font("Comic Sans MS"));
-        textAuth.setPrefSize(300, 30);
-        
-        Button buttonAuth = new Button("Login");//creation de notre button
-        buttonAuth.setFont(Font.font("Comic Sans MS"));
-        
-        HBox hboxAuthe = new HBox();
-        hboxAuthe.setSpacing(10);
-        hboxAuthe.setPadding(new Insets(10,20,20,10));
-        hboxAuthe.getChildren().addAll(labelAuth,textAuth,buttonAuth);
-        hboxAuthe.setAlignment(Pos.CENTER);
-        
-        vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
-        vboxroot.getChildren().addAll(hboxPrivate,hboxAuthe);
-        vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
-
-        }
-        else{
-            System.out.println("not Room selectione ");
-        }
-    });
-
+        //affichage Scene 
         Scene sceneRoom = new Scene(vboxroot,900,600);
         stage.setScene(sceneRoom);
         stage.setResizable(false);
@@ -398,15 +396,15 @@ public class RoomSetings extends Application {
 
     //function permet de etablier connexion 
     void connexionEtabler(String reqType) throws Exception{
-                //utilise in ligne 68 in the same file RoomSetings.java 
-                socket = new Socket("localhost", 1234);
-                System.out.println("Connected!");
-                // get the output stream from the socket.
-                is = socket.getInputStream();
-                isr = new InputStreamReader(is);
-                br = new BufferedReader(isr);
-                pw = new PrintWriter(socket.getOutputStream(),true);
-                pw.println(reqType);                
+            //utilise in ligne 68 in the same file RoomSetings.java 
+            socket = new Socket("localhost", 1234);
+            System.out.println("Connected!");
+            // get the output stream from the socket.
+            is = socket.getInputStream();
+            isr = new InputStreamReader(is);
+            br = new BufferedReader(isr);
+            pw = new PrintWriter(socket.getOutputStream(),true);
+            pw.println(reqType);                
      }
 
         //conexion a serveur pour ajoute le new Room
@@ -418,35 +416,34 @@ public class RoomSetings extends Application {
                     //System.out.println("Sending messages to the ServerSocket");
                     objectOutputStream.writeObject(r);          
 
-                } catch (IOException e1) {
+            }catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
-                }
-         }
+            }
+    }
 
          //conexion a server et login  in room specifie using id for this room 
-         Room getRoom(String idRoom){
-             try {
-                  pw.println(idRoom);
-                  //recupere room and recorede new matche  
-			      // get the input stream from the connected socket
-			      InputStream inputStream = socket.getInputStream();
-			      // create a DataInputStream so we can read data from it.
-			      ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                  Room r = (Room) objectInputStream.readObject();
-                  return r;  
-
-             } catch (Exception e) {
+    Room getRoom(String idRoom){
+            try {
+                    pw.println(idRoom);
+                    //recupere room and recorede new matche  
+                    // get the input stream from the connected socket
+                    InputStream inputStream = socket.getInputStream();
+                    // create a DataInputStream so we can read data from it.
+                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                    Room r = (Room) objectInputStream.readObject();
+                    return r; 
+            } catch (Exception e) {
                 // TODO: handle exception
-             }
+            }
             return null;
-         }
+    }
          
-         //login in Room specifique 
-         void loginRoom(int idRoom, Stage Stage) throws Exception{
-            //creation une instance de client pour login in this room
-            Client client = new Client(idRoom);
-            client.start(Stage);
-         }
+    //login in Room specifique 
+    void loginRoom(int idRoom, Stage Stage) throws Exception{
+        //creation une instance de client pour login in this room
+        Client client = new Client(idRoom);
+        client.start(Stage);
+    }
                  
 }
