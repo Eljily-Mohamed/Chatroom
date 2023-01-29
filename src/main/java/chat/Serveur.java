@@ -58,7 +58,7 @@ public class Serveur extends Thread {
 				if( action == 1){
 					try{
 						nmbr_Room = Integer.parseInt(br.readLine());
-						System.out.println(nmbr_Room); // 
+						System.out.println("idRoom" + nmbr_Room); // 
 					}
 					catch (NumberFormatException ex){
 						ex.printStackTrace();
@@ -133,7 +133,7 @@ public class Serveur extends Thread {
 	
 		public Conversation(Socket nsock , int nmbr_Room) {
 			sc = nsock;
-			nmbr_Room = nmbr_Room;
+			this.nmbr_Room = this.nmbr_Room;
 			add();
 			//add this to the arraylist, one instance/thread for every connection.
 		}
@@ -161,7 +161,9 @@ public class Serveur extends Thread {
 			for (Conversation st : clients) {
 				if(st == this || this.nmbr_Room != st.nmbr_Room ) continue; //statics :/
 				st.dispatchMessage(message);
+				System.out.println("id conversation : " + st.nmbr_Room);
 			}
+			System.out.println(" id room de conversation now = "+this.nmbr_Room);
 		}
 	
 		@Override
