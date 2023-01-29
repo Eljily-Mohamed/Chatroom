@@ -56,8 +56,8 @@ public class RoomSetings extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Room Chat");
-         Text textRoom = new Text("Room Available: ");
-		 textRoom.setFont(Font.font("Comic Sans MS"));
+        Text textRoom = new Text("Room Available: ");
+		textRoom.setFont(Font.font("Comic Sans MS"));
        
 
         //cree text for display for identifie le room available 

@@ -64,7 +64,8 @@ public class Serveur extends Thread {
 						ex.printStackTrace();
 					}
 					System.out.println(); 
-					Conversation conversation = new Conversation(socket,nmbr_Room);
+					Conversation conversation = new Conversation(socket);
+
 					conversation.start();
 				}
 				if(action == 2){
@@ -131,10 +132,11 @@ public class Serveur extends Thread {
 			this.clients.remove(this);
 		}
 	
-		public Conversation(Socket nsock , int nmbr_Room) {
+		public Conversation(Socket nsock) {
 			sc = nsock;
-			this.nmbr_Room = this.nmbr_Room;
+			this.nmbr_Room = nmbr_Room;
 			add();
+			System.out.println("Conversation created with id "+this.nmbr_Room);
 			//add this to the arraylist, one instance/thread for every connection.
 		}
 	
