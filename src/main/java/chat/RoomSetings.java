@@ -1,4 +1,4 @@
-package chat.Messagrie;
+package chat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -46,10 +47,6 @@ public class RoomSetings extends Application {
     public static void main(String[] args) {
         launch(args);
   }
-
-   RoomSetings(){
-      
-   }
 
     @Override
     public void start(Stage stage) throws Exception {

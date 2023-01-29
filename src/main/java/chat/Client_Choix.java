@@ -79,9 +79,17 @@ public class Client_Choix extends Application {
 			//for button buttonChat
 
 			buttonChat.setOnMouseClicked((e) -> {
-                  System.out.println("hello!");
+                  RoomSetings rS = new RoomSetings();
+				  try {
+					rS.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			});
 
+			//for button on va faire apres 
+          
 
 			//Display this Scene in stage 
 		    scene = new Scene(BP1,900,600);//width, height

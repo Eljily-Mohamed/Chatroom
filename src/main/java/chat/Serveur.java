@@ -1,4 +1,4 @@
-package chat.Serveur;
+package chat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +13,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import chat.Messagrie.Room;
 
 //on doit cree notre server multithread 
 public class Serveur extends Thread {
