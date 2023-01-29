@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 //on doit cree notre server multithread 
 public class Serveur extends Thread {
@@ -24,10 +25,10 @@ public class Serveur extends Thread {
       private int action ;
 	  //for action 1
 	  private boolean isActive = true;
-	  private int nmbr_Clients= 0 ;
+	  //private int nmbr_Clients= 0 ;
 	  private int nmbr_Room;
 	  //private List<String> nomUsres = new ArrayList<String>();
-	  private List<Conversation> clients = new ArrayList<Conversation>();
+	  //private List<Conversation> clients = new ArrayList<Conversation>();
 	  //end
 	  //for action 2 
 	  ArrayList  <Room> rooms = new ArrayList<Room>();
@@ -55,17 +56,15 @@ public class Serveur extends Thread {
 					ex.printStackTrace();
 				}
 				if( action == 1){
-					++nmbr_Clients;
 					try{
 						nmbr_Room = Integer.parseInt(br.readLine());
-						System.out.println(nmbr_Room); // output = 25
+						System.out.println(nmbr_Room); // 
 					}
 					catch (NumberFormatException ex){
 						ex.printStackTrace();
 					}
 					System.out.println(); 
-					Conversation conversation = new Conversation(socket,nmbr_Clients,nmbr_Room);
-					clients.add(conversation);
+					Conversation conversation = new Conversation(socket,nmbr_Room);
 					conversation.start();
 				}
 				if(action == 2){
@@ -119,92 +118,80 @@ public class Serveur extends Thread {
 	
 //////////////////class conversation 
 	  
-	 class Conversation extends Thread{
-		 protected Socket socket_client ;
-		 protected int numero_client;
-		 protected int nmbr_Room;
-
-		 //on doit ajoute tab qui contient le noms de users
-		 public Conversation(Socket socket_client , int numero_client , int nmbr_Room) {
-			this.socket_client = socket_client;
-			this.numero_client = numero_client;
-			this.nmbr_Room = nmbr_Room;
+	  static class Conversation extends Thread{
+		private Socket sc;
+		private int nmbr_Room;
+		private static ArrayList<Conversation> clients = new ArrayList<>();
+	
+		private synchronized void add() {
+			this.clients.add(this);
 		}
-		 
-
-		//public void brodcast_message(String message,Socket socket, String nomUser)
-		 public void brodcast_message(String message,Socket socketC){
-			
-		//for(String nomClient:nomUsres) {
-
-			 for (Conversation client:clients) {
-				 try {
-					  //if (nomClient.equals(nomUser)) {
-					    if(client.socket_client != socketC) {
-					    	 pw = new PrintWriter(client.socket_client.getOutputStream(),true);
-							 pw.println(message);
-							 break;
-					    } 
-//					    else {
-//					    	 pw = new PrintWriter(client.socket_client.getOutputStream(),true);
-//							 pw.println(message); 
-//					    }
-					 
-					  //}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				 
-			  //}
-			} 
-		
-		//messgae vers tous monde 
-		
+	
+		private synchronized void remove() {
+			this.clients.remove(this);
 		}
-		//end methode brodcast vers tous les monde 
-
-		  @Override
-			public void run() {
-				try {
-					is = socket_client.getInputStream();
-			        isr = new InputStreamReader(is);
-				    br = new BufferedReader(isr);
-					
-					pw = new PrintWriter(socket_client.getOutputStream(),true);
-					String ipClinet = socket_client.getRemoteSocketAddress().toString();
-					pw.println("Bien venue , vous etes le client"+ipClinet);
-					System.out.println("le connexion bien etablie a client :"+ipClinet);
-					//pw.println("Ajout nom ici : ");
-					//nomUsres.add(br.readLine());
-					
-					while(true) {
-						String req=br.readLine();
-						System.out.println(req);
-						// String req_Reponse[] = req.split(":");
-						// System.out.println(req);
-						// if(req_Reponse.length == 2) {
-						// 	String nomClient = req_Reponse[0];
-						// 	String message = req_Reponse[1];
-						// 	 //brodcast_message(message,socket_client,nomClient);	
-						// 	   brodcast_message(message,socket_client);
-						// }
-						// else {
-							 //brodcast_message(req,socket_client,"unll");
-							   brodcast_message(req,socket_client);
-						// }
-					}
-	          				
-					
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	
+		public Conversation(Socket nsock , int nmbr_Room) {
+			sc = nsock;
+			nmbr_Room = nmbr_Room;
+			add();
+			//add this to the arraylist, one instance/thread for every connection.
+		}
+	
+		private synchronized void dispatchMessage(String message) {
+			//send one message 
+	
+			try {
+				OutputStream out = this.sc.getOutputStream();
+				PrintWriter pw = new PrintWriter(out);
+				//now send the message
+				System.out.printf("dispatchMessage: Sending message '%s'\n", message); //visualize what's happening in the console
+			   // pw.print(message); //deliberately send no newline yet
+				pw.println(message);
+				pw.flush();
+	
+			} catch (IOException e) {
+				System.out.println("dispatchMessage caught exception :(");
+				e.printStackTrace();
 			}
-			//end methode run  for class COnversation 
-	 }
-
+	
+		}
+	
+		private synchronized void dispatch(String message) {
+			for (Conversation st : clients) {
+				if(st == this || this.nmbr_Room != st.nmbr_Room ) continue; //statics :/
+				st.dispatchMessage(message);
+			}
+		}
+	
+		@Override
+		public void run() {
+			//listen for input, if received dispatch it
+			InputStream inst;
+			OutputStream outst;
+			PrintWriter pw;
+	
+			try {
+				//instantiate objects for reading and writing to the socket
+				inst = sc.getInputStream();
+				outst = sc.getOutputStream();
+				pw = new PrintWriter(outst);
+				Scanner in = new Scanner(inst);
+				String inMessage;
+	
+				while (true) {
+					inMessage = in.nextLine(); //maybe replace this with something less newline-dependant.
+					//the above call *should* block until input is actually received.
+					//that's rather fortunate for our CPU usage.
+					System.out.printf("run(): received: '%s'.\n", inMessage);
+					dispatch(inMessage);
+				}
+	
+			} catch (IOException e) {
+			}
+	
+		}
+	}
 	 //end class Conversation 
 
 	/**
