@@ -62,6 +62,12 @@ public class RoomSetings extends Application {
         stage.setTitle("Room Chat");
         Text textRoom = new Text("Room Available: ");
 		textRoom.setFont(Font.font("Comic Sans MS"));
+
+         //*************************************//
+	    //***********  Sectione 1  *************//
+
+        /*sectione 1 : qui contient selection de room apartire de rooms available 
+                       apres login in this room */
         
         //qui recupere le nombre de Rooms 
         ArrayList <Room> Romms = new ArrayList<Room>();
@@ -84,21 +90,21 @@ public class RoomSetings extends Application {
         new EventHandler<ActionEvent>() {
              public void handle(ActionEvent e){
                 String [] values =cb.getValue().toString().split("=");
+                //ajoute text a lable name l'element selectioner
                 selected.setText(cb.getValue() + " selected" + values[0]);
                 //recupere id for this room and stocke dans notre varaible id
                 id=values[0];
             }
         };
-       
-        cb.setOnAction(event);
 
+        cb.setOnAction(event);
         //end selecte 
       
         //creation de notre button qui login a l'un de room available
         Button logininRoom = new Button("Login");
         logininRoom.setFont(Font.font("Comic Sans MS"));
             
-       
+        //creation de notre Hbox qui contient la liste des rooms available et aussi buttons login 
         HBox hboxRoom = new HBox();
         hboxRoom.setSpacing(10);
         hboxRoom.setStyle("-fx-background-color: #DAF7A6 ;"); 
@@ -106,31 +112,31 @@ public class RoomSetings extends Application {
         hboxRoom.getChildren().addAll(selected,textRoom,cb,logininRoom);
         hboxRoom.setAlignment(Pos.CENTER);
         
+          //*************************************//
+	    //***********  Sectione 2  *************//
+
+        /*sectione 2 : qui contient creation de Chat privee */
     
-    /////////////////creation for buttons chat Private ////////////////////////////////////////////////////
-        
-        
-
-              //create ComboBox 
+        //create ComboBox 
                
-              Text textPrivate= new Text("Private Chat: ");
-              textRoom.setFont(Font.font("Comic Sans MS"));
+        Text textPrivate= new Text("Private Chat: ");
+        textRoom.setFont(Font.font("Comic Sans MS"));
 
-              String [] privateChoix = {"PV -> Numero","PV -> Name"};
-              ComboBox cbPrivate =
-              new ComboBox(FXCollections
-                        .observableArrayList(privateChoix));
-            
-                        Label selectedPrivate = new Label();
-        
-                        //create handler for this comboBox 
-                        EventHandler<ActionEvent> eventPrivate =
-                        new EventHandler<ActionEvent>() {
-                             public void handle(ActionEvent e){
-                                selectedPrivate.setText(cbPrivate.getValue() + "");
-                            }
-                        };
-                       
+        String [] privateChoix = {"PV -> Numero","PV -> Name"};
+        ComboBox cbPrivate =
+        new ComboBox(FXCollections
+                .observableArrayList(privateChoix));
+    
+                Label selectedPrivate = new Label();
+
+                //create handler for this comboBox 
+                EventHandler<ActionEvent> eventPrivate =
+                new EventHandler<ActionEvent>() {
+                        public void handle(ActionEvent e){
+                        selectedPrivate.setText(cbPrivate.getValue() + "");
+                    }
+                };
+                
                         cbPrivate.setOnAction(eventPrivate);
     
         Button logininPrivate = new Button("Login");
