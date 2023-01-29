@@ -187,30 +187,31 @@ public class RoomSetings extends Application {
                   Room room = new Room("", "") ;
                   String host = textNameRoom.getText();
                   room.setName(host);
+                  //button pour creation de Room private 
                   Button privateButton = new Button("Private");
-                  privateButton.setFont(Font.font("Comic Sans MS"));
-                   
-
+                  privateButton.setFont(Font.font("Comic Sans MS")); 
+                  //button pour creation de Room Public 
                   Button publicButton = new Button("Public");
                   publicButton.setFont(Font.font("Comic Sans MS"));
-                  
-                  
+                  //creation de notre hbox qui contient les different buttons
                   HBox hboxStatu = new HBox();
                   hboxStatu.setSpacing(10);
                   hboxStatu.setStyle("-fx-background-color: #DAF7A6 ;"); 
                   hboxStatu.setPadding(new Insets(20,20,20,10));
                   hboxStatu.getChildren().addAll(privateButton , publicButton);
                   hboxStatu.setAlignment(Pos.TOP_CENTER);
-
+                  //vboxroot qui contient tous les hbox exsite et on peut manipile facile 
                   vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
                   vboxroot.getChildren().addAll(hboxCraetion,hboxStatu);
                   vboxroot.setMargin(hboxStatu , new Insets(20,20,30,10));
-                  System.out.println("affichage de buttons chois par user pour selectione  ");
-
-
-                //buttons type de room logique and display for button public 
                  
+                  //end Affichage
+
+                  //logique sectione 3 pour button privee si il veut cree room privee
+
                     privateButton.setOnMouseClicked((Eventprivate) -> { 
+                    //on genere private key for this private room 
+
                     int leftLimit = 48; // numeral '0'
                     int rightLimit = 122; // letter 'z'
                     int targetStringLength = 32;
@@ -221,23 +222,31 @@ public class RoomSetings extends Application {
                       .limit(targetStringLength)
                       .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                       .toString();
-                    
+                    //end generated code on doit make key for this room
                     room.setKey(generatedString);
-                    room.setStatu("private");
-                    createRoom(room);
-                    try {  
-                      connexion(rooms.size(),stage);
+                    //make room status private 
+                    room.setStatu("private"); 
+                    try {
+                        connexionEtabler("2");
+                         //appelle methode to create room ligne :392
+                        createRoom(room);
+                        loginRoom(rooms.size(),stage);
                     } catch (Exception e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                   });
 
+                  //logique sectione 3 pour button public si il veut cree room public
+
                   publicButton.setOnAction((eventPubic) -> {
                        room.setStatu("public");  
-                       createRoom(room);
                        try {
-                          connexion(rooms.size(),stage);
+                        connexionEtabler("2");
+                        //appelle methode to create room ligne :392
+                        createRoom(room);
+                        //apre creation de notre Room on rentre directe dans cette room
+                        loginRoom(rooms.size(),stage);
                     } catch (Exception e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
@@ -245,77 +254,92 @@ public class RoomSetings extends Application {
                   });
 
                   //end buttons type de room
+
              }else{
                     //affichage le nom de la room empty 
+                    //on peut message dangerous pour dit a user il doit ajout name
                     System.out.println("Empty Room name ");
                   }
                  
-         });  
+         }); 
 
 
+        //logique sectione 1
 
+        logininRoom.setOnAction((Event) -> {
+                if(!selected.getText().isEmpty()){
+                        String[] words = selected.getText().split(" ");
+                        try {
+                            connexionEtabler("4");
+                        } catch (Exception e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }           
+                        //faire appelle a fonction  pour recupere room precise ligne:417
+                        //pass id room comme Argument  
+                        Room privat = getRoom(id);
 
-
-//////////////////////////////button2 
-
-logininRoom.setOnAction((Event) -> {
-    if(!selected.getText().isEmpty()){
-    String[] words = selected.getText().split(" ");
-         
-    Room privat = loginRoom(id);
-    System.out.println("id room is : "+privat.getIdroom());
-    if(privat.getStatu().compareToIgnoreCase("private") == 0){
-           //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
-        Text labelAuth = new Text("Private Romm ");
-        labelAuth.setFont(Font.font("Comic Sans MS"));
+                        //test status de notre room
+                        if(privat.getStatu().compareToIgnoreCase("private") == 0){
+                                //if room public donc on a besoine de faire l'authantification si no on doit faire l'authantification
+                                Text labelAuth = new Text("Private Romm ");
+                                labelAuth.setFont(Font.font("Comic Sans MS"));
+                                
+                                TextField textAuth = new TextField("Add Key "); //cree text filde permet de ajout text
+                                textAuth.setFont(Font.font("Comic Sans MS"));
+                                textAuth.setPrefSize(300, 30);
+                
+                                Button buttonAuth = new Button("Login");//creation de notre button
+                                buttonAuth.setFont(Font.font("Comic Sans MS"));
         
-        TextField textAuth = new TextField("Add Key "); //cree text filde permet de ajout text
-        textAuth.setFont(Font.font("Comic Sans MS"));
-        textAuth.setPrefSize(300, 30);
-        
-        Button buttonAuth = new Button("Login");//creation de notre button
-        buttonAuth.setFont(Font.font("Comic Sans MS"));
-        
-        HBox hboxAuthe = new HBox();
-        hboxAuthe.setSpacing(10);
-        hboxAuthe.setPadding(new Insets(10,20,20,10));
-        hboxAuthe.getChildren().addAll(labelAuth,textAuth,buttonAuth);
-        hboxAuthe.setAlignment(Pos.CENTER);
-  
-        vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
-        vboxroot.getChildren().addAll(hboxRoom,hboxAuthe);
-        vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
+                                HBox hboxAuthe = new HBox();
+                                hboxAuthe.setSpacing(10);
+                                hboxAuthe.setPadding(new Insets(10,20,20,10));
+                                hboxAuthe.getChildren().addAll(labelAuth,textAuth,buttonAuth);
+                                hboxAuthe.setAlignment(Pos.CENTER);
+                        
+                                vboxroot.getChildren().remove(0,vboxroot.getChildren().size());
+                                vboxroot.getChildren().addAll(hboxRoom,hboxAuthe);
+                                vboxroot.setMargin(hboxAuthe , new Insets(20,20,30,10));
 
-        buttonAuth.setOnAction((eventAuth) -> {
-            id=textAuth.getText();
-            if(privat.getKey().compareTo(id) == 0){
-                  System.out.println("valide key ");
-                  try {
-                    connexion(privat.getIdroom(),stage);
-                } catch (Exception e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                                //logique pour faire l'authantification for private room 
+                                buttonAuth.setOnAction((eventAuth) -> {
+                                    id=textAuth.getText();
+                                    if(privat.getKey().compareTo(id) == 0){
+                                        System.out.println("valide key ");
+                                        try {
+                                            //faire appelle a function to login in this room ligne:445
+                                            loginRoom(privat.getIdroom(),stage);
+                                        } catch (Exception e1) {
+                                            // TODO Auto-generated catch block
+                                            e1.printStackTrace();
+                                        }
+                                    }
+                                    else{
+                                        System.out.println("not valide key ");
+                                    }
+                                });
+
+                        }else{
+                            //un cas public room  
+                            try {
+                                loginRoom(privat.getIdroom(),stage);
+                            } catch (Exception e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }      
+                        }        
                 }
-            }
-            else{
-                  System.out.println("not valide key ");
-            }
+                else{
+                    System.out.println("not Room selectione ");
+                    //on peut ajouter message dangerous pour dit a user aucune selectione
+                }
         });
 
-    }
-    else{
-        
-    }        
-    }
-    else{
-        System.out.println("not Room selectione ");
-    }
-});
 
-//////////////////////////////button3 
-             
-      //on ajouer for selectione button
+       //logique sectione 2
 
+      
       logininPrivate.setOnAction((Event) -> {
         if(!selectedPrivate.getText().isEmpty()){
         String[] words = selectedPrivate.getText().split("->");
@@ -372,8 +396,8 @@ logininRoom.setOnAction((Event) -> {
         }
     }
 
-     //function permet de etablier connexion 
-     void connexionEtabler(String reqType) throws Exception{
+    //function permet de etablier connexion 
+    void connexionEtabler(String reqType) throws Exception{
                 //utilise in ligne 68 in the same file RoomSetings.java 
                 socket = new Socket("localhost", 1234);
                 System.out.println("Connected!");
@@ -386,40 +410,23 @@ logininRoom.setOnAction((Event) -> {
      }
 
         //conexion a serveur pour ajoute le new Room
-         void createRoom(Room r){
-               try {
-                        socket = new Socket("localhost", 1234);
-                        System.out.println("Connected!");
-                        // get the output stream from the socket.
-                        is = socket.getInputStream();
-                        isr = new InputStreamReader(is);
-                        br = new BufferedReader(isr);
-                        pw = new PrintWriter(socket.getOutputStream(),true);
-                        pw.println("2");
-                        OutputStream outputStream = socket.getOutputStream();
-                        // create an object output stream from the output stream so we can send an object through it
-                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                        System.out.println("Sending messages to the ServerSocket");
-                        objectOutputStream.writeObject(r);          
-    
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+    void createRoom(Room r){
+            try {
+                    OutputStream outputStream = socket.getOutputStream();
+                    // create an object output stream from the output stream so we can send an object through it
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                    //System.out.println("Sending messages to the ServerSocket");
+                    objectOutputStream.writeObject(r);          
+
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
          }
 
          //conexion a server et login  in room specifie using id for this room 
-         Room loginRoom(String idRoom){
+         Room getRoom(String idRoom){
              try {
-                  //utilise in ligne 68 in the same file RoomSetings.java 
-                  socket = new Socket("localhost", 1234);
-                  System.out.println("Connected!");
-                  // get the output stream from the socket.
-                  is = socket.getInputStream();
-                  isr = new InputStreamReader(is);
-                  br = new BufferedReader(isr);
-                  pw = new PrintWriter(socket.getOutputStream(),true);
-                  pw.println("4");
                   pw.println(idRoom);
                   //recupere room and recorede new matche  
 			      // get the input stream from the connected socket
@@ -435,10 +442,9 @@ logininRoom.setOnAction((Event) -> {
             return null;
          }
          
-         //connexion in Room specifique 
-         void connexion(int idRoom, Stage Stage) throws Exception{
-            System.out.println("Connexion in room chat ");
-            System.out.println("idRoom" + idRoom);
+         //login in Room specifique 
+         void loginRoom(int idRoom, Stage Stage) throws Exception{
+            //creation une instance de client pour login in this room
             Client client = new Client(idRoom);
             client.start(Stage);
          }
