@@ -22,6 +22,9 @@ public class Client_Choix extends Application {
  
 	@Override
 	public void start(Stage stage) throws Exception {
+     
+	         //*************************************//
+	        //***********  Affichage  *************//
 
              //start 1ere BorderPanel
 		     BorderPane BP1 = new BorderPane();
@@ -69,8 +72,19 @@ public class Client_Choix extends Application {
 		    vboxFooter.setPadding(new Insets(40));
 		    BP1.setBottom(vboxFooter); 
 			
+
+             //*************************************//
+	        //***********  logique  ***************//
+			
+			//for button buttonChat
+
+			buttonChat.setOnMouseClicked((e) -> {
+                  System.out.println("hello!");
+			});
+
+
 			//Display this Scene in stage 
-		    scene = new Scene(BP1,900,600);
+		    scene = new Scene(BP1,900,600);//width, height
 		    stage.setScene(scene);
 		    stage.setResizable(false);
 		    stage.show();
