@@ -70,15 +70,14 @@ public class RoomSetings extends Application {
         fetchRooms(Romms);
         //creation de Map qui contient id de Room with le nom de Room 
         Map<Integer,String> rooms = new HashMap<>(); 
-        
         for (Room room : Romms) {
             rooms.put(room.getIdroom(),room.getName());
         }
-         //create ComboBox 
-        ComboBox cb =
-        new ComboBox(FXCollections
-                  .observableArrayList(rooms.entrySet().toArray()));
+        //create ComboBox 
+        ComboBox cb =new ComboBox(FXCollections
+                       .observableArrayList(rooms.entrySet().toArray()));
 
+        //creation de label qui s'affcihe item selectione 
         Label selected = new Label(); 
         //create handler for this comboBox 
         EventHandler<ActionEvent> event =
@@ -86,11 +85,14 @@ public class RoomSetings extends Application {
              public void handle(ActionEvent e){
                 String [] values =cb.getValue().toString().split("=");
                 selected.setText(cb.getValue() + " selected" + values[0]);
+                //recupere id for this room and stocke dans notre varaible id
                 id=values[0];
             }
         };
        
         cb.setOnAction(event);
+
+        //end selecte 
       
         //creation de notre button qui login a l'un de room available
         Button logininRoom = new Button("Login");
