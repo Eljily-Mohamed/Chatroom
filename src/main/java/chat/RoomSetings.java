@@ -187,8 +187,6 @@ public class RoomSetings extends Application {
                   Room room = new Room("", "") ;
                   String host = textNameRoom.getText();
                   room.setName(host);
-                  
-                  
                   Button privateButton = new Button("Private");
                   privateButton.setFont(Font.font("Comic Sans MS"));
                    
