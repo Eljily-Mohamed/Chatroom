@@ -25,7 +25,8 @@ public class Serveur extends Thread {
 	  //for action 1
 	  private boolean isActive = true;
 	  private int nmbr_Clients= 0 ;
-	  private List<String> nomUsres = new ArrayList<String>();
+	  private int nmbr_Room;
+	  //private List<String> nomUsres = new ArrayList<String>();
 	  private List<Conversation> clients = new ArrayList<Conversation>();
 	  //end
 	  //for action 2 
@@ -48,14 +49,22 @@ public class Serveur extends Thread {
 				br = new BufferedReader(isr);
 				try{
 					action = Integer.parseInt(br.readLine());
-					System.out.println(action); // output = 25
+					// System.out.println(action); // output = 25
 				}
 				catch (NumberFormatException ex){
 					ex.printStackTrace();
 				}
 				if( action == 1){
 					++nmbr_Clients;
-					Conversation conversation = new Conversation(socket,nmbr_Clients);
+					try{
+						nmbr_Room = Integer.parseInt(br.readLine());
+						System.out.println(nmbr_Room); // output = 25
+					}
+					catch (NumberFormatException ex){
+						ex.printStackTrace();
+					}
+					System.out.println(); 
+					Conversation conversation = new Conversation(socket,nmbr_Clients,nmbr_Room);
 					clients.add(conversation);
 					conversation.start();
 				}
@@ -113,21 +122,25 @@ public class Serveur extends Thread {
 	 class Conversation extends Thread{
 		 protected Socket socket_client ;
 		 protected int numero_client;
-		 
+		 protected int nmbr_Room;
+
 		 //on doit ajoute tab qui contient le noms de users
-		 public Conversation(Socket socket_client , int numero_client) {
+		 public Conversation(Socket socket_client , int numero_client , int nmbr_Room) {
 			this.socket_client = socket_client;
 			this.numero_client = numero_client;
+			this.nmbr_Room = nmbr_Room;
 		}
 		 
+
 		//public void brodcast_message(String message,Socket socket, String nomUser)
-		 public void brodcast_message(String message,Socket socket){
+		 public void brodcast_message(String message,Socket socket,int idRoom){
 			
 		//for(String nomClient:nomUsres) {
+
 			 for (Conversation client:clients) {
 				 try {
 					  //if (nomClient.equals(nomUser)) {
-					    if(client.socket_client != socket) {
+					    if(client.socket_client != socket && client.nmbr_Room == this.nmbr_Room) {
 					    	 pw = new PrintWriter(client.socket_client.getOutputStream(),true);
 							 pw.println(message); 
 							   break;
@@ -174,11 +187,11 @@ public class Serveur extends Thread {
 							String nomClient = req_Reponse[0];
 							String message = req_Reponse[1];
 							 //brodcast_message(message,socket_client,nomClient);	
-							   brodcast_message(message,socket_client);
+							   brodcast_message(message,socket_client,nmbr_Room);
 						}
 						else {
 							 //brodcast_message(req,socket_client,"unll");
-							   brodcast_message(req,socket_client);
+							   brodcast_message(req,socket_client,nmbr_Room);
 						}
 					}
 	          				

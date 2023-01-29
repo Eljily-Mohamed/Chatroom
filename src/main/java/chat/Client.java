@@ -38,9 +38,12 @@ import javafx.stage.Stage;
 
 public class Client extends Application {
 	PrintWriter pw ;
-	
+    int idRoom;
+
+	Client (int idRoom){
+		this.idRoom = idRoom;
+	}
 	//on doit ajout le methode main ici on va faire apelle a la methode lunch()
-	
      public static void main(String[] args) {
 		  launch(args);
 	}
@@ -120,10 +123,11 @@ public class Client extends Application {
 				 Socket socket = new Socket("localhost",1234);
 				 InputStream inputStream = socket.getInputStream();
 				 InputStreamReader isr = new InputStreamReader(inputStream);
-				 
 				 BufferedReader br = new BufferedReader(isr);
 				 pw = new PrintWriter(socket.getOutputStream(),true);
 				 pw.println("1");
+				 String idRoomString=String.valueOf(idRoom);  
+				 pw.println(idRoom);
 				 new Thread(()->{	
 					    while(true) {
 					    	try {
@@ -144,8 +148,6 @@ public class Client extends Application {
 		//  });
 
 		 //on doit utilse function for checking this stat
-		 
-
 		 //logique for button Envoyer 
 		 
 		 buttonEnvoyer.setOnAction((evt)->{
